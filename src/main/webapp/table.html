@@ -10,34 +10,95 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--导入js库-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .panel-body {
+         padding: 0;
+        }
+    </style>
 </head>
 
 <body>
-<div class="container">
-    <h2>表格</h2>
-    <p> .table-striped 类在 tbody 内添加斑马线形式的条纹 ( IE8 不支持):</p>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Firstname</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>Anna</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Debbie</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>John</td>
-        </tr>
-        </tbody>
-    </table>
+<div class="container" style="margin-top:100px;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form class="form-inline">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="button" class="btn btn-default">源代码：</button>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button type="button" class="btn btn-success" onclick="submitTryit()" id="submitBTN">
+                                    <span class="glyphicon glyphicon-send"></span> 点击运行
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-body" style="height: 392px">
+                    <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                    <pre id="code" class="ace_editor" style="min-height:374px;margin: 10px;"><textarea class="ace_text-input">
+#include <cstdio>
+int main(){
+int n,m;
+scanf("%d %d",&n,&m);
+printf("%d",n+m);
+return 0;
+}
+                    </textarea>
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <form class="form-inline">
+                        <button type="button" class="btn btn-default">运行结果</button>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <div id="iframewrapper">
+                        <iframe frameborder="0" id="iframeResult" style="height: 384.28px;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+<script>
+    //初始化对象
+    editor = ace.edit("code");
+
+    //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    theme = "monokai"  //monokai
+    language = "c_cpp"  //python 语言可以设置为 python
+    editor.setTheme("ace/theme/" + theme);
+    editor.session.setMode("ace/mode/" + language);
+
+    //字体大小
+    editor.setFontSize(18);
+
+    //设置只读（true时只读，用于展示代码）
+    editor.setReadOnly(false);
+
+    //自动换行,设置为off关闭
+    editor.setOption("wrap", "off");
+
+    //启用提示菜单
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+</script>
 </body>
 </html>
