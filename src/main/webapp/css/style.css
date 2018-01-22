@@ -49,3 +49,8 @@
     color: #888;
     text-decoration: none;
 }
+.subnavbar .caret {
+    margin-top: 4px;
+    border-top-color: white;
+    border-bottom-color: white;
+}
