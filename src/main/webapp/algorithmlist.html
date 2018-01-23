@@ -9,9 +9,7 @@
     <title>Demo of ACE Editor</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./js/echarts.min.js"  type="text/javascript" charset="utf-8"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -181,5 +179,19 @@
 </div>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="./plugin/layer/layer.js"></script>
+<script>
+    $(function () {
+        //layer.msg('提交失败,请重试');
+
+        layer.msg('确定取消关注?', {
+            time: 0 //不自动关闭
+            ,btn: ['嗯呐', '返回']
+            ,yes: function(index){
+                layer.close(index);
+            }
+        });
+    })
+</script>
 </body>
 </html>
