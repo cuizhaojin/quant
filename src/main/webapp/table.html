@@ -8,14 +8,11 @@
                                      user-scalable=no">
     <title>Demo of ACE Editor</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echarts.min.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./css/style.css">
-    <style>
-        .panel-body {
-         padding: 0;
-        }
-    </style>
 </head>
 <body>
 <!--导航-->
@@ -91,23 +88,23 @@
     </div>
     <div class="col-md-9">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading" style="padding: 4px 15px">
                 <form class="form-inline">
                     <div class="row">
                         <div class="col-xs-6">
                             <button type="button" class="btn btn-default">源代码：</button>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button type="button" class="btn btn-success" onclick="submitTryit()" id="submitBTN">
+                            <button type="button" class="btn btn-primary" onclick="submitTryit()" id="submitBTN">
                                 <span class="glyphicon glyphicon-send"></span> 点击运行
                             </button>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="panel-body" style="height: 392px">
+            <div class="panel-body" style="height: 403px">
                 <!--代码输入框（注意请务必设置高度，否则无法显示）-->
-                    <pre id="code" class="ace_editor" style="min-height:374px;margin: 10px;"><textarea class="ace_text-input">
+                    <pre id="code" class="ace_editor" style="min-height:376px;margin: 0px;"><textarea class="ace_text-input">
 #include <cstdio>
 int main(){
 int n,m;
@@ -247,9 +244,177 @@ return 0;
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default" style="height: 300px;" id="main">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--策略列表-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <header class="panel-heading">
+                    Todo list
+                </header>
+                <div class="panel-body">
+
+                    <div class="task-content">
+
+                        <ul class="task-list ui-sortable">
+                            <li class="">
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey list-child" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                    <!-- <input type="checkbox" class="square-grey"/> -->
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Director is Modern Dashboard</span>
+                                    <span class="label label-success">2 Days</span>
+                                    <div class="pull-right hidden-phone">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Fully Responsive &amp; Bootstrap 3.0.2 Compatible</span>
+                                    <span class="label label-danger">Done</span>
+                                    <div class="pull-right hidden-phone">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Latest Design Concept</span>
+                                    <span class="label label-warning">Company</span>
+                                    <div class="pull-right hidden-phone">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Write well documentation for this theme</span>
+                                    <span class="label label-primary">3 Days</span>
+                                    <div class="pull-right hidden-phone">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Don't bother to download this Dashbord</span>
+                                    <span class="label label-inverse">Now</span>
+                                    <div class="pull-right">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Give feedback for the template</span>
+                                    <span class="label label-success">2 Days</span>
+                                    <div class="pull-right hidden-phone">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="task-checkbox">
+                                    <!-- <input type="checkbox" class="list-child" value=""  /> -->
+                                    <div class="icheckbox_flat-grey" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" class="flat-grey" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <div class="task-title">
+                                    <span class="task-title-sp">Tell your friends about this admin template</span>
+                                    <span class="label label-danger">Now</span>
+                                    <div class="pull-right hidden-phone">
+                                        <button class="btn btn-default btn-xs"><i class="icon-play"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-pencil"></i></button>
+                                        <button class="btn btn-default btn-xs"><i class="icon-remove"></i></button>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class=" add-task-row">
+                        <a class="btn btn-success btn-sm pull-left" href="#"><i class="icon-plus"></i> Add New Tasks</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
 <!--导入js库-->
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js" ></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
 <script>
     //初始化对象
     editor = ace.edit("code");
@@ -261,7 +426,7 @@ return 0;
     editor.session.setMode("ace/mode/" + language);
 
     //字体大小
-    editor.setFontSize(18);
+    editor.setFontSize(14);
 
     //设置只读（true时只读，用于展示代码）
     editor.setReadOnly(false);

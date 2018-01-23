@@ -54,3 +54,109 @@
     border-top-color: white;
     border-bottom-color: white;
 }
+.panel{
+    border-radius: inherit;
+}
+.panel-heading {
+    border-bottom: 1px solid #eee;
+    background-color: #FAFAFA;
+    padding: 10px 15px;
+    text-transform: uppercase;
+}
+.task-content {
+    margin-bottom: 30px;
+}
+.task-list li:hover {
+    background: #f9f9f9;
+}
+.task-list {
+    padding: 0;
+    margin: 0;
+}
+ul.task-list {
+    list-style: none;
+}
+.task-list > li {
+    position: relative;
+    padding: 10px 5px;
+    border-bottom: 1px dashed #eaeaea;
+}
+.task-list li > .task-checkbox {
+    float: left;
+    width: 30px;
+}
+
+.icheckbox_flat-grey, .iradio_flat-grey {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background: url(../image/grey.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+.task-list li > .task-title {
+    overflow: hidden;
+    margin-right: 10px;
+}
+.task-list li .task-title .task-title-sp {
+    margin-right: 5px;
+}
+.label-success {
+    background-color: #27C24C;
+    color: #DFF5E4;
+}
+.badge, .label {
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+.btn.btn-default {
+    background-color: #fafafa;
+    color: #666;
+    border-color: #ddd;
+    border-bottom-color: #ddd;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.btn.btn-success {
+    background-color: #27c24c;
+    border: none;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.btn.btn-success:hover, .btn.btn-success:active, .btn.btn-success.hover {
+    background-color: #23ad44;
+    border: none;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.btn.btn-default {
+    background-color: #fafafa;
+    color: #666;
+    border-color: #ddd;
+    border-bottom-color: #ddd;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.btn.btn-default:hover, .btn.btn-default:active, .btn.btn-default.hover {
+    background-color: #f4f4f4!important;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
