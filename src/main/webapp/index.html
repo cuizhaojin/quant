@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+    <title>Demo of ACE Editor</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/echarts.min.js"  type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<!--导航-->
+
+<div id="content-header" style="background-color: #e5e5e5;">
+    <div class="container">
+        <div id="breadcrumb"> <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
+    </div>
+</div>
+<!--二级导航-->
+<div class="subnavbar">
+    <div class="subnavbar-inner">
+        <div class="container">
+            <ul class="mainnav">
+                <li class="active"><a href="index.html"><i class="glyphicon glyphicon-dashboard"></i><span>Dashboard</span> </a> </li>
+                <li><a href="reports.html"><i class="glyphicon glyphicon-edit"></i><span>Reports</span> </a> </li>
+                <li class="subnavbar-open-right"><a href="guidely.html"><i class="glyphicon glyphicon-list-alt"></i><span>App Tour</span> </a></li>
+                <li><a href="charts.html"><i class="glyphicon glyphicon-shopping-cart"></i><span>Charts</span> </a> </li>
+                <li><a href="shortcodes.html"><i class="glyphicon glyphicon-shopping-cart"></i><span>Shortcodes</span> </a> </li>
+                <li class="dropdown subnavbar-open-right"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-shopping-cart"></i><span>Drops</span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="icons.html">Icons</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li class="subnavbar-open-right"><a href="pricing.html">Pricing Plans</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="signup.html">Signup</a></li>
+                        <li class="subnavbar-open-right"><a href="error.html">404</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /subnavbar-inner -->
+</div>
+<!--主编辑区-->
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                我的策略列表
+            </div>
+            <div class="panel-body" style="height: 365px;">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+            </div>
+            <div class="panel-footer">
+                Panel Footer
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="padding: 4px 15px">
+                <form class="form-inline">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button type="button" class="btn btn-default">源代码：</button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button type="button" class="btn btn-primary" onclick="submitTryit()" id="submitBTN">
+                                <span class="glyphicon glyphicon-send"></span> RUN
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-body" style="height: 403px">
+                <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+                    <pre id="code" class="ace_editor" style="min-height:376px;margin: 0px;"><textarea class="ace_text-input">
+#include <cstdio>
+int main(){
+int n,m;
+scanf("%d %d",&n,&m);
+printf("%d",n+m);
+return 0;
+}
+                    </textarea>
+                    </pre>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--运行结果区域-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    运行控制台
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Home</a>
+                        </li>
+                        <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Profile</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="home">
+                            <h4>Home Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <div class="tab-pane fade" id="profile">
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    编号
+                                                </th>
+                                                <th>
+                                                    产品
+                                                </th>
+                                                <th>
+                                                    交付时间
+                                                </th>
+                                                <th>
+                                                    状态
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                    TB - Monthly
+                                                </td>
+                                                <td>
+                                                    01/04/2012
+                                                </td>
+                                                <td>
+                                                    Default
+                                                </td>
+                                            </tr>
+                                            <tr class="success">
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                    TB - Monthly
+                                                </td>
+                                                <td>
+                                                    01/04/2012
+                                                </td>
+                                                <td>
+                                                    Approved
+                                                </td>
+                                            </tr>
+                                            <tr class="error">
+                                                <td>
+                                                    2
+                                                </td>
+                                                <td>
+                                                    TB - Monthly
+                                                </td>
+                                                <td>
+                                                    02/04/2012
+                                                </td>
+                                                <td>
+                                                    Declined
+                                                </td>
+                                            </tr>
+                                            <tr class="warning">
+                                                <td>
+                                                    3
+                                                </td>
+                                                <td>
+                                                    TB - Monthly
+                                                </td>
+                                                <td>
+                                                    03/04/2012
+                                                </td>
+                                                <td>
+                                                    Pending
+                                                </td>
+                                            </tr>
+                                            <tr class="info">
+                                                <td>
+                                                    4
+                                                </td>
+                                                <td>
+                                                    TB - Monthly
+                                                </td>
+                                                <td>
+                                                    04/04/2012
+                                                </td>
+                                                <td>
+                                                    Call in to confirm
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--导入js库-->
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js" ></script>
+<script>
+    //初始化对象
+    editor = ace.edit("code");
+
+    //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    theme = "monokai"  //monokai
+    language = "c_cpp"  //python 语言可以设置为 python
+    editor.setTheme("ace/theme/" + theme);
+    editor.session.setMode("ace/mode/" + language);
+
+    //字体大小
+    editor.setFontSize(14);
+
+    //设置只读（true时只读，用于展示代码）
+    editor.setReadOnly(false);
+
+    //自动换行,设置为off关闭
+    editor.setOption("wrap", "off");
+
+    //启用提示菜单
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true
+    });
+</script>
+</body>
+</html>
