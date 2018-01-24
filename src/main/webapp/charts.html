@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html LANG="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,
@@ -9,7 +9,10 @@
     <title>Demo of ACE Editor</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script src="./js/echarts.min.js"  type="text/javascript" charset="utf-8"></script>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./plugin/layer/layer.js"></script>
+    <script src="./js/highstock.js"  type="text/javascript" charset="utf-8"></script>
+
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -47,43 +50,141 @@
 </div>
 <!--图表charts demo-->
 <div class="container">
+    <!-- 各种指标列表-->
+    <div class="row" style="margin-bottom:5px;">
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4.00%</span>
+                    策略收益
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>-0.186%</span>
+                    策略年化收益
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>100,320</span>
+                    基准收益
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4567</span>
+                    Alpha
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4567</span>
+                    Beta
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4567</span>
+                    最大回撤
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--chart body-->
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default" style="height: 300px;" id="main">
+            <div class="panel panel-default" style="height: 600px;" id="main">
 
             </div>
         </div>
     </div>
 </div>
-<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="./plugin/layer/layer.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js" ></script>
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        legend: {
-            data:['销量']
-        },
-        xAxis: {
-            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+<script>
+    $(function () {
+        $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/large-dataset.json&callback=?', function (data) {
+            // Create a timer
+            var start = +new Date();
+            // Create the chart
+            $('#main').highcharts('StockChart', {
+                chart: {
+                    events: {
+                        load: function () {
+                            if (!window.isComparing) {
+                                this.setTitle(null, {
+                                    text: 'Built chart in ' + (new Date() - start) + 'ms'
+                                });
+                            }
+                        }
+                    },
+                    zoomType: 'x'
+                },
+                tooltip: {
+                    split: false,
+                    shared: true,
+                },
+                rangeSelector: {
+                    buttons: [{
+                        type: 'day',
+                        count: 3,
+                        text: '3d'
+                    }, {
+                        type: 'week',
+                        count: 1,
+                        text: '1w'
+                    }, {
+                        type: 'month',
+                        count: 1,
+                        text: '1m'
+                    }, {
+                        type: 'month',
+                        count: 6,
+                        text: '6m'
+                    }, {
+                        type: 'year',
+                        count: 1,
+                        text: '1y'
+                    }, {
+                        type: 'all',
+                        text: 'All'
+                    }],
+                    selected: 3
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature (°C)'
+                    }
+                },
+                title: {
+                    text: 'Hourly temperatures in Vik i Sogn, Norway, 2004-2010'
+                },
+                subtitle: {
+                    text: 'Built chart in ...' // dummy text to reserve space for dynamic subtitle
+                },
+                series: [{
+                    name: 'Temperature',
+                    data: data.data,
+                    pointStart: Date.UTC(2004, 3, 1),
+                    pointInterval: 3600 * 1000,
+                    tooltip: {
+                        valueDecimals: 1,
+                        valueSuffix: '°C'
+                    }
+                }]
+            });
+        });
+    });
 </script>
 </body>
 </html>
