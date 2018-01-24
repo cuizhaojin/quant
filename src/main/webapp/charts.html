@@ -114,78 +114,122 @@
 <script type="text/javascript" src="./js/bootstrap.min.js" ></script>
 <script>
     $(function () {
-        $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/large-dataset.json&callback=?', function (data) {
-            // Create a timer
-            var start = +new Date();
-            // Create the chart
+        Highcharts.setOptions({
+            lang: {
+                rangeSelectorZoom: ''
+            }
+        });
+        $.getJSON('https://data.jianshukeji.com/stock/history/000001', function (data) {
+            if(data.code !== 1) {
+                alert('读取股票数据失败！');
+                return false;
+            }
+            data = data.data;
+            var ohlc = [],
+                    volume = [],
+                    dataLength = data.length,
+            // set the allowed units for data grouping
+                    groupingUnits = [[
+                        'week',                         // unit name
+                        [1]                             // allowed multiples
+                    ], [
+                        'month',
+                        [1, 2, 3, 4, 6]
+                    ]],
+                    i = 0;
+            for (i; i < dataLength; i += 1) {
+                ohlc.push([
+                    data[i][0], // the date
+                    data[i][1], // open
+                    data[i][2], // high
+                    data[i][3], // low
+                    data[i][4] // close
+                ]);
+                volume.push([
+                    data[i][0], // the date
+                    data[i][5] // the volume
+                ]);
+            }
+            // create the chart
             $('#main').highcharts('StockChart', {
-                chart: {
-                    events: {
-                        load: function () {
-                            if (!window.isComparing) {
-                                this.setTitle(null, {
-                                    text: 'Built chart in ' + (new Date() - start) + 'ms'
-                                });
-                            }
-                        }
-                    },
-                    zoomType: 'x'
+                rangeSelector: {
+                    selected: 1,
+                    inputDateFormat: '%Y-%m-%d'
+                },
+                title: {
+                    text: '平安银行历史股价'
+                },
+                xAxis: {
+                    dateTimeLabelFormats: {
+                        millisecond: '%H:%M:%S.%L',
+                        second: '%H:%M:%S',
+                        minute: '%H:%M',
+                        hour: '%H:%M',
+                        day: '%m-%d',
+                        week: '%m-%d',
+                        month: '%y-%m',
+                        year: '%Y'
+                    }
                 },
                 tooltip: {
                     split: false,
                     shared: true,
                 },
-                rangeSelector: {
-                    buttons: [{
-                        type: 'day',
-                        count: 3,
-                        text: '3d'
-                    }, {
-                        type: 'week',
-                        count: 1,
-                        text: '1w'
-                    }, {
-                        type: 'month',
-                        count: 1,
-                        text: '1m'
-                    }, {
-                        type: 'month',
-                        count: 6,
-                        text: '6m'
-                    }, {
-                        type: 'year',
-                        count: 1,
-                        text: '1y'
-                    }, {
-                        type: 'all',
-                        text: 'All'
-                    }],
-                    selected: 3
-                },
-                yAxis: {
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
                     title: {
-                        text: 'Temperature (°C)'
-                    }
-                },
-                title: {
-                    text: 'Hourly temperatures in Vik i Sogn, Norway, 2004-2010'
-                },
-                subtitle: {
-                    text: 'Built chart in ...' // dummy text to reserve space for dynamic subtitle
-                },
+                        text: '股价'
+                    },
+                    height: '65%',
+                    resize: {
+                        enabled: true
+                    },
+                    lineWidth: 2
+                }, {
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: '成交量'
+                    },
+                    top: '65%',
+                    height: '35%',
+                    offset: 0,
+                    lineWidth: 2
+                }],
                 series: [{
-                    name: 'Temperature',
-                    data: data.data,
-                    pointStart: Date.UTC(2004, 3, 1),
-                    pointInterval: 3600 * 1000,
+                    type: 'candlestick',
+                    name: '平安银行',
+                    color: 'green',
+                    lineColor: 'green',
+                    upColor: 'red',
+                    upLineColor: 'red',
                     tooltip: {
-                        valueDecimals: 1,
-                        valueSuffix: '°C'
+                    },
+                    navigatorOptions: {
+                        color: Highcharts.getOptions().colors[0]
+                    },
+                    data: ohlc,
+                    dataGrouping: {
+                        units: groupingUnits
+                    },
+                    id: 'sz'
+                },{
+                    type: 'column',
+                    data: volume,
+                    yAxis: 1,
+                    dataGrouping: {
+                        units: groupingUnits
                     }
                 }]
             });
         });
     });
+
 </script>
 </body>
 </html>
