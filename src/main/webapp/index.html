@@ -33,7 +33,6 @@
 </head>
 <body>
 <!--导航-->
-
 <div id="content-header" style="background-color: #e5e5e5;">
     <div class="container">
         <div id="breadcrumb"> <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
@@ -44,19 +43,19 @@
     <div class="subnavbar-inner">
         <div class="container">
             <ul class="mainnav">
-                <li class="active"><a href="index.html"><i class="glyphicon glyphicon-dashboard"></i><span>Dashboard</span> </a> </li>
-                <li><a href="reports.html"><i class="glyphicon glyphicon-edit"></i><span>Reports</span> </a> </li>
-                <li class="subnavbar-open-right"><a href="guidely.html"><i class="glyphicon glyphicon-list-alt"></i><span>App Tour</span> </a></li>
-                <li><a href="charts.html"><i class="glyphicon glyphicon-shopping-cart"></i><span>Charts</span> </a> </li>
-                <li><a href="shortcodes.html"><i class="glyphicon glyphicon-shopping-cart"></i><span>Shortcodes</span> </a> </li>
-                <li class="dropdown subnavbar-open-right"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-shopping-cart"></i><span>Drops</span> <b class="caret"></b></a>
+                <li class="active"><a href="index.html"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
+                <li><a href="charts.html"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
+                <li class="subnavbar-open-right"><a href="analyzing.html"><i class="glyphicon glyphicon-dashboard"></i><span>性能指标</span> </a></li>
+                <li><a href="algorithmlist.html"><i class="glyphicon glyphicon-list-alt"></i><span>我的策略</span> </a> </li>
+                <li><a href="index.html"><i class="icon-plus "></i><span>new nav</span> </a> </li>
+                <li class="dropdown subnavbar-open-right"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-plus"></i><span>下拉列表</span> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="icons.html">Icons</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li class="subnavbar-open-right"><a href="pricing.html">Pricing Plans</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="signup.html">Signup</a></li>
-                        <li class="subnavbar-open-right"><a href="error.html">404</a></li>
+                        <li><a href="index.html">one</a></li>
+                        <li><a href="index.html">two</a></li>
+                        <li class="subnavbar-open-right"><a href="index.html">three</a></li>
+                        <li><a href="index.html">four</a></li>
+                        <li><a href="index.html">five</a></li>
+                        <li class="subnavbar-open-right"><a href="index.html">six</a></li>
                     </ul>
                 </li>
             </ul>
@@ -87,10 +86,10 @@
                 <form class="form-inline">
                     <div class="row">
                         <div class="col-xs-6">
-                            <button type="button" class="btn btn-default">源代码：</button>
+                            <h5>源代码</h5>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button type="button" class="btn btn-primary" onclick="submitTryit()" id="submitBTN">
+                            <button type="button" class="btn btn-default" onclick="submitTryit()" id="submitBTN">
                                 <span class="glyphicon glyphicon-send"></span> RUN
                             </button>
                         </div>
@@ -246,7 +245,7 @@ return 0;
     editor = ace.edit("code");
 
     //设置风格和语言（更多风格和语言，请到github上相应目录查看）
-    theme = "monokai"  //monokai
+    theme = "clouds"  //monokai
     language = "c_cpp"  //python 语言可以设置为 python
     editor.setTheme("ace/theme/" + theme);
     editor.session.setMode("ace/mode/" + language);
