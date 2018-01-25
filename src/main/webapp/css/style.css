@@ -157,7 +157,7 @@ ul.task-list {
 }
 .btn.btn-default:hover, .btn.btn-default:active, .btn.btn-default.hover {
     background-color: #f4f4f4!important;
-    outline:0
+    outline:0;
     -webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
     -ms-transition: all .3s ease;
