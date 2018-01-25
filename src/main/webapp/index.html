@@ -125,19 +125,19 @@ return 0;
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">Home</a>
+                        <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">日志</a>
                         </li>
-                        <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">Profile</a>
+                        <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">错误</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="home">
-                            <h4>Home Tab</h4>
+                            <h4>日志</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                         <div class="tab-pane fade" id="profile">
-                            <h4>Home Tab</h4>
+                            <h4>错误</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                     </div>
@@ -153,8 +153,8 @@ return 0;
     editor = ace.edit("code");
 
     //设置风格和语言（更多风格和语言，请到github上相应目录查看）
-    theme = "clouds"  //monokai
-    language = "c_cpp"  //python 语言可以设置为 python
+    theme = "monokai"  //monokai clouds
+    language = "python"  //python 语言可以设置为 python  c_cpp
     editor.setTheme("ace/theme/" + theme);
     editor.session.setMode("ace/mode/" + language);
 
