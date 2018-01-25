@@ -25,6 +25,9 @@
         <module name="quant" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="quant" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
