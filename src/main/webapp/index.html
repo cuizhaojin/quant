@@ -87,10 +87,15 @@
             <div class="panel-heading" style="padding: 4px 15px">
                 <form class="form-inline">
                     <div class="row">
-                        <div class="col-xs-6">
-                            <h5><i class="icon-fullscreen" onclick="allscreen();" id="screen-set"></i> 源代码 </h5>
+                        <div class="col-xs-6" style="padding-top: 7px">
+                            <a href="#" style="text-decoration: none;color:#383838;">
+                                <i class="icon-fullscreen" onclick="allscreen();" id="screen-set"></i>
+                            </a> 源代码
                         </div>
                         <div class="col-xs-6 text-right">
+                            <a class="btn btn-default" onclick="submitTryit()" id="submitBTN">
+                                保存
+                            </a>
                             <a class="btn btn-default" onclick="submitTryit()" id="submitBTN">
                                 <span class="icon-play"></span> RUN
                             </a>
@@ -98,9 +103,9 @@
                     </div>
                 </form>
             </div>
-            <div class="panel-body" style="height: 403px;padding:0px">
+            <div class="panel-body" style="height: 405px;padding:0px">
                 <!--代码输入框（注意请务必设置高度，否则无法显示）-->
-                    <pre id="code" class="ace_editor" style="min-height:403px;margin: 0px;border: none;border-radius: 0px;"><textarea class="ace_text-input">
+                    <pre id="code" class="ace_editor"><textarea class="ace_text-input">
 #include <cstdio>
 int main(){
 int n,m;
