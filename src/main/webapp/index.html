@@ -11,11 +11,13 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--js  mqtt client-->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="./plugin/layer/layer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
-    <script src="./js/echarts.min.js"  type="text/javascript" charset="utf-8"></script>
     <script src="./js/action.js"  type="text/javascript" charset="utf-8"></script>
+    <script src="./js/mqtt-action.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="./css/style.css">
     <script>
         $(function () {
@@ -130,10 +132,10 @@
                             </a> 源代码
                         </div>
                         <div class="col-xs-6 text-right">
-                            <a class="btn btn-default" onclick="submitTryit()" id="submitSave">
+                            <a class="btn btn-default" onclick="submitSave()" id="submitSave">
                                 保存
                             </a>
-                            <a class="btn btn-default" onclick="submitTryit()" id="submitRun">
+                            <a class="btn btn-default" onclick="submitRun()" id="submitRun">
                                 <span class="icon-play"></span> RUN
                             </a>
                         </div>
@@ -216,7 +218,7 @@ return 0;
         enableSnippets: true,
         enableLiveAutocompletion: true
     });
-   //alert(editor.getValue());
+
 </script>
 </body>
 </html>

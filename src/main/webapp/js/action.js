@@ -1,3 +1,30 @@
+function submitSave(){
+    var python_code = editor.getValue();
+    var rootPath = "localhost:8089/quant"
+    $.ajax({
+        url: rootPath + '/manager/addAlgorithm',
+        async: true,
+        type: 'POST',
+        data: {
+            "userId":"123456",
+            "algorithmName": "test_001",
+            "code": python_code
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.result == 1) {
+                console.info(data.out);
+            } else if (data.result == 0) {
+
+            }
+        },
+        error: function () {
+
+        }
+
+    });
+}
+
 function allscreen() {
     if ($("#editpanel").attr("class") == 'col-md-9') {
         $("#leftside").css("display", "none");
