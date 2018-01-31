@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.temp.demo.dao.AppCommentDao">
+<mapper namespace="com.hexun.quant.demo.dao.AppCommentDao">
 
     <sql id="queryPageStart">
         SELECT	* FROM 	(
@@ -11,7 +11,7 @@
         ) TEMP limit ${page.beginRow},${page.endRow}
     </sql>
 
-    <insert id="addAppComment" parameterType="com.temp.vo.AppComment">
+    <insert id="addAppComment" parameterType="com.hexun.quant.vo.AppComment">
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             select replace(uuid(),'-','') from dual
         </selectKey>
@@ -56,7 +56,7 @@
     </insert>
 
 
-    <select id="getCommentPageList" resultType="com.temp.vo.UserZoneAppComment">
+    <select id="getCommentPageList" resultType="com.hexun.quant.vo.UserZoneAppComment">
         <include refid="queryPageStart"/>
         SELECT
         u.login_name,
@@ -110,7 +110,7 @@
     </select>
 
 
-    <select id="getCommentPageListUserZone" resultType="com.temp.vo.UserZoneAppComment">
+    <select id="getCommentPageListUserZone" resultType="com.hexun.quant.vo.UserZoneAppComment">
         <include refid="queryPageStart"/>
         SELECT
         u.login_name,

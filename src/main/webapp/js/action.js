@@ -1,6 +1,6 @@
 function submitSave(){
     var python_code = editor.getValue();
-    var rootPath = "localhost:8089/quant"
+    var rootPath = "http://localhost:8089/quant"
     $.ajax({
         url: rootPath + '/manager/addAlgorithm',
         async: true,

@@ -1,0 +1,242 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: hexun
+  Date: 2018/1/31
+  Time: 11:20
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/commons/taglibs.jsp" %>
+<html LANG="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+    <title>回测图表</title>
+    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/image/favicon.ico" media="screen">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link href="${contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./plugin/layer/layer.js"></script>
+    <script src="${contextPath}/js/highstock.js"  type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="${contextPath}/css/style.css">
+</head>
+<body>
+<!--导航-->
+<div id="content-header" style="background-color: #e5e5e5;">
+    <div class="container">
+        <div id="breadcrumb"> <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
+    </div>
+</div>
+<!--二级导航-->
+<div class="subnavbar">
+    <div class="subnavbar-inner">
+        <div class="container">
+            <ul class="mainnav">
+                <li><a href="index.html"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
+                <li class="active"><a href="charts.html"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
+                <li class="subnavbar-open-right"><a href="analyzing.html"><i class="glyphicon glyphicon-dashboard"></i><span>性能指标</span> </a></li>
+                <li><a href="algorithmlist.html"><i class="glyphicon glyphicon-list-alt"></i><span>我的策略</span> </a> </li>
+                <li><a href="index.html"><i class="icon-plus "></i><span>new nav</span> </a> </li>
+                <li class="dropdown subnavbar-open-right"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-plus"></i><span>下拉列表</span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">one</a></li>
+                        <li><a href="index.html">two</a></li>
+                        <li class="subnavbar-open-right"><a href="index.html">three</a></li>
+                        <li><a href="index.html">four</a></li>
+                        <li><a href="index.html">five</a></li>
+                        <li class="subnavbar-open-right"><a href="index.html">six</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /subnavbar-inner -->
+</div>
+<!--图表charts demo-->
+<div class="container">
+    <!-- 各种指标列表-->
+    <div class="row" style="margin-bottom:5px;">
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4.00%</span>
+                    策略收益
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>-0.186%</span>
+                    策略年化收益
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>100,320</span>
+                    基准收益
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4567</span>
+                    Alpha
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4567</span>
+                    Beta
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="sm-st clearfix">
+                <div class="sm-st-info">
+                    <span>4567</span>
+                    最大回撤
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--chart body-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default" style="height: 600px;" id="main">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="${contextPath}/js/bootstrap.min.js" ></script>
+<script>
+    $(function () {
+        Highcharts.setOptions({
+            lang: {
+                rangeSelectorZoom: ''
+            }
+        });
+        $.getJSON('https://data.jianshukeji.com/stock/history/000001', function (data) {
+            if(data.code !== 1) {
+                alert('读取股票数据失败！');
+                return false;
+            }
+            data = data.data;
+            var ohlc = [],
+                    volume = [],
+                    dataLength = data.length,
+            // set the allowed units for data grouping
+                    groupingUnits = [[
+                        'week',                         // unit name
+                        [1]                             // allowed multiples
+                    ], [
+                        'month',
+                        [1, 2, 3, 4, 6]
+                    ]],
+                    i = 0;
+            for (i; i < dataLength; i += 1) {
+                ohlc.push([
+                    data[i][0], // the date
+                    data[i][1], // open
+                    data[i][2], // high
+                    data[i][3], // low
+                    data[i][4] // close
+                ]);
+                volume.push([
+                    data[i][0], // the date
+                    data[i][5] // the volume
+                ]);
+            }
+            // create the chart
+            $('#main').highcharts('StockChart', {
+                rangeSelector: {
+                    selected: 1,
+                    inputDateFormat: '%Y-%m-%d'
+                },
+                title: {
+                    text: '平安银行历史股价'
+                },
+                xAxis: {
+                    dateTimeLabelFormats: {
+                        millisecond: '%H:%M:%S.%L',
+                        second: '%H:%M:%S',
+                        minute: '%H:%M',
+                        hour: '%H:%M',
+                        day: '%m-%d',
+                        week: '%m-%d',
+                        month: '%y-%m',
+                        year: '%Y'
+                    }
+                },
+                tooltip: {
+                    split: false,
+                    shared: true
+                },
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: '股价'
+                    },
+                    height: '65%',
+                    resize: {
+                        enabled: true
+                    },
+                    lineWidth: 2
+                }, {
+                    labels: {
+                        align: 'right',
+                        x: -3
+                    },
+                    title: {
+                        text: '成交量'
+                    },
+                    top: '65%',
+                    height: '35%',
+                    offset: 0,
+                    lineWidth: 2
+                }],
+                series: [{
+                    type: 'candlestick',
+                    name: '平安银行',
+                    color: 'green',
+                    lineColor: 'green',
+                    upColor: 'red',
+                    upLineColor: 'red',
+                    tooltip: {
+                    },
+                    navigatorOptions: {
+                        color: Highcharts.getOptions().colors[0]
+                    },
+                    data: ohlc,
+                    dataGrouping: {
+                        units: groupingUnits
+                    },
+                    id: 'sz'
+                },{
+                    type: 'column',
+                    data: volume,
+                    yAxis: 1,
+                    dataGrouping: {
+                        units: groupingUnits
+                    }
+                }]
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -17,7 +17,7 @@ public class QuantManagerServiceImpl {
     //添加回测策略url 接口地址
     private final String add_algorithm_url = PropertiesUtils.getPropertiesValue("uat_add_algorithm");
 
-    public String addAlgorithm(String userId,String algorithmName,JSONObject param) {
+    public String apiForAddAlgorithm(String userId,String algorithmName,JSONObject param) {
         String result = "";
         String geturl = add_algorithm_url;
         String params = "?algorithm_name="+algorithmName+"&user_id=" + userId ;
