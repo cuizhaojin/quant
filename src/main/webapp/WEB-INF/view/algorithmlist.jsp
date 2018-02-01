@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/commons/taglibs.jsp" %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -34,10 +35,10 @@
     <div class="subnavbar-inner">
         <div class="container">
             <ul class="mainnav">
-                <li><a href="index.html"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
-                <li><a href="charts.html"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
-                <li class="subnavbar-open-right"><a href="analyzing.html"><i class="glyphicon glyphicon-dashboard"></i><span>性能指标</span> </a></li>
-                <li class="active"><a href="algorithmlist.html"><i class="glyphicon glyphicon-list-alt"></i><span>我的策略</span> </a> </li>
+                <li><a href="${contextPath}/manager/edit/123"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
+                <li><a href="${contextPath}/manager/benefit"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
+                <li class="subnavbar-open-right"><a href="${contextPath}/manager/testdetail"><i class="glyphicon glyphicon-dashboard"></i><span>性能指标</span> </a></li>
+                <li class="active"><a href="${contextPath}/manager/list"><i class="glyphicon glyphicon-list-alt"></i><span>我的策略</span> </a> </li>
                 <li><a href="index.html"><i class="icon-plus "></i><span>new nav</span> </a> </li>
                 <li class="dropdown subnavbar-open-right"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-plus"></i><span>下拉列表</span> <b class="caret"></b></a>
                     <ul class="dropdown-menu">

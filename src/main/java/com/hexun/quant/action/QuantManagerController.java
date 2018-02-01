@@ -41,7 +41,17 @@ public class QuantManagerController {
                                HttpServletResponse response,
                                @PathVariable("algorithmId")String algorithmId) {
 
-        return ModelAndViewUtil.Jsp("/WEB-INF/view/edit");
+        String jsonstr = quantManagerServiceImpl.apiForGetAlgorithmById(algorithmId);
+
+        //判断json str
+
+
+
+
+
+
+        model.addAttribute("data",jsonstr);
+        return ModelAndViewUtil.Jsp("WEB-INF/view/edit");
     }
 
     /**
@@ -54,7 +64,49 @@ public class QuantManagerController {
     @RequestMapping(value = "/new")
     public ModelAndView toAdd(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-        return ModelAndViewUtil.Jsp("/WEB-INF/view/edit");
+        return ModelAndViewUtil.Jsp("WEB-INF/view/edit");
+    }
+
+
+    /**
+     * 跳转到我的策略列表页面
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/list")
+    public ModelAndView toMyAlgorithmlist(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        return ModelAndViewUtil.Jsp("WEB-INF/view/algorithmlist");
+    }
+
+
+    /**
+     * 跳转到收益图表页面
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/benefit")
+    public ModelAndView toBenefitCharts(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        return ModelAndViewUtil.Jsp("WEB-INF/view/charts");
+    }
+
+
+    /**
+     * 跳转到回测详情页面
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/testdetail")
+    public ModelAndView toTestDetail(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        return ModelAndViewUtil.Jsp("WEB-INF/view/testdetail");
     }
 
     /**
@@ -86,10 +138,72 @@ public class QuantManagerController {
             JSONObject jsonObject = JSON.parseObject(result);
             return ModelAndViewUtil.Json_ok("out", jsonObject);
         } catch (Exception e) {
-            logger.error("封装添加策略接口出现异常" + e.getMessage(), e);
-            return ModelAndViewUtil.Json_error("封装添加策略接口异常");
+            logger.error("添加策略接口出现异常" + e.getMessage(), e);
+            return ModelAndViewUtil.Json_error("添加策略接口异常");
         }
     }
+
+
+
+    /**
+     * 封装 "修改策略接口"
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/addAlgorithm")
+    public ModelAndView modifyAlgorithm(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        String userId = request.getParameter("userId");
+        String algorithmName = request.getParameter("algorithmName");
+        String code = request.getParameter("code");
+        try {
+            if(!StringUtils.isNotEmpty(userId)) {
+                return ModelAndViewUtil.Json_error("userId参数为空");
+            }
+            if(!StringUtils.isNotEmpty(algorithmName)){
+                return ModelAndViewUtil.Json_error("algorithmName参数为空");
+            }
+            if(!StringUtils.isNotEmpty(code)){
+                return ModelAndViewUtil.Json_error("code参数为空");
+            }
+            JSONObject jsonparam = new JSONObject();
+            jsonparam.put("body",code);
+            String result = quantManagerServiceImpl.apiForModifyAlgorithm(userId,algorithmName,jsonparam);
+            JSONObject jsonObject = JSON.parseObject(result);
+            return ModelAndViewUtil.Json_ok("out", jsonObject);
+        } catch (Exception e) {
+            logger.error("修改策略接口出现异常" + e.getMessage(), e);
+            return ModelAndViewUtil.Json_error("修改策略接口异常");
+        }
+    }
+
+    /**
+     * 封装 "修改策略接口"
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/deleteAlgorithm")
+    public ModelAndView deleteAlgorithm(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        String userId = request.getParameter("userId");
+        String algorithmId = request.getParameter("algorithmId");
+        try {
+            if(!StringUtils.isNotEmpty(algorithmId)){
+                return ModelAndViewUtil.Json_error("algorithmName参数为空");
+            }
+            String result = quantManagerServiceImpl.apiForDeleteAlgorithm(userId,algorithmId);
+            JSONObject jsonObject = JSON.parseObject(result);
+            return ModelAndViewUtil.Json_ok("out", jsonObject);
+        } catch (Exception e) {
+            logger.error("删除策略接口出现异常" + e.getMessage(), e);
+            return ModelAndViewUtil.Json_error("删除策略接口异常");
+        }
+    }
+
 }
 
 
