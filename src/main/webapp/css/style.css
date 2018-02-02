@@ -325,7 +325,7 @@ input[type=text].rename_input {
 .less-container{
     height: 210px;
     color: rgb(153, 153, 153);
-    background-color: #000000;
+    background-color: #272822;
     padding: 2px 4px 20px 4px;
     outline: none;
     overflow: scroll;
