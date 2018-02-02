@@ -32,8 +32,10 @@ client.onMessageArrived = onMessageArrived;
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
-        console.log("onConnectionLost:"+responseObject.errorMessage);
+        console.log("onConnectionLost:onSubFailed:MQTT——链接丢失:"+responseObject.errorMessage);
     }
+    client.connect(options);
+    console.log("断后重连");
 }
 
 // called when a message arrives
@@ -58,8 +60,8 @@ function onConnect() {
 function OnConnectFailed(responseObject) {
     if (responseObject.errorCode !== 0) {
         console.log("onConnectFailed:"+responseObject.errorMessage);
-        console.log(responseObject);
-
+        client.connect(options);
+        console.log("断后重连");
     }
 }
 
