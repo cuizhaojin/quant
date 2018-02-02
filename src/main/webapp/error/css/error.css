@@ -1,0 +1,196 @@
+{
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px
+}
+body {
+    BACKGROUND: #ffffff;
+    FONT-FAMILY: "微软雅黑"
+}
+
+image {
+    BORDER-TOP-STYLE: none;
+    BORDER-RIGHT-STYLE: none;
+    BORDER-LEFT-STYLE: none;
+    BORDER-BOTTOM-STYLE: none
+}
+
+a {
+    CURSOR: pointer
+}
+
+ul {
+    LIST-STYLE-TYPE: none
+}
+
+li {
+    LIST-STYLE-TYPE: none
+}
+
+table {
+    TABLE-LAYOUT: fixed
+}
+
+table tr td {
+    WORD-BREAK: break-all;
+    WORD-WRAP: break-word
+}
+
+a {
+    TEXT-DECORATION: none;
+    outline: none
+}
+
+
+.cf:unknown {
+    CLEAR: both;
+    DISPLAY: block;
+    FONT-SIZE: 0px;
+    VISIBILITY: hidden;
+    HEIGHT: 0px;
+    content: "."
+}
+
+.cf {
+    CLEAR: both;
+    ZOOM: 1
+}
+
+.bg {
+    BACKGROUND: url(../../error/404/01.jpg) #dad9d7 no-repeat center top;
+    LEFT: 0px;
+    OVERFLOW: hidden;
+    WIDTH: 100%;
+    HEIGHT: 600px
+}
+
+.cont {
+    MARGIN: 0px auto;
+    WIDTH: 500px;
+    LINE-HEIGHT: 20px
+}
+
+.c1 {
+    HEIGHT: 360px;
+    TEXT-ALIGN: center
+}
+
+.c1 .img1 {
+    MARGIN-TOP: 180px
+}
+
+.c1 .img2 {
+    MARGIN-TOP: 165px
+}
+
+.cont H2 {
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 18px;
+    COLOR: #555;
+    HEIGHT: 35px;
+    TEXT-ALIGN: center
+}
+
+.c2 {
+    HEIGHT: 35px;
+    TEXT-ALIGN: center
+}
+
+.c2 a {
+    DISPLAY: inline-block;
+    FONT-SIZE: 14px;
+    MARGIN: 0px 4px;
+    COLOR: #626262;
+    PADDING-TOP: 1px;
+    HEIGHT: 24px;
+    TEXT-ALIGN: left;
+    TEXT-DECORATION: none
+}
+
+.c2 a:hover {
+    COLOR: #626262;
+    TEXT-DECORATION: none
+}
+
+.c2 a.home {
+    PADDING-LEFT: 30px;
+    BACKGROUND: url(../../error/404/02.png);
+    WIDTH: 96px
+}
+
+.c2 a.home:hover {
+    BACKGROUND: url(../../error/404/02.png) 0px -24px
+}
+
+.c2 a.home:active {
+    BACKGROUND: url(../../error/404/02.png) 0px -48px
+}
+
+.c2 a.re {
+    PADDING-LEFT: 30px;
+    BACKGROUND: url(../../error/404/03.png);
+    WIDTH: 66px
+}
+
+.c2 a.re:hover {
+    BACKGROUND: url(../../error/404/03.png) 0px -24px
+}
+
+.c2 a.re:active {
+    BACKGROUND: url(../../../error/404/03.png) 0px -48px
+}
+
+.c2 A.sr {
+    PADDING-LEFT: 28px;
+    BACKGROUND: url(../../error/404/04.png);
+    WIDTH: 153px
+}
+
+.c2 a.sr:hover {
+    BACKGROUND: url(../../error/404/04.png) 0px -24px
+}
+
+.c2 a.sr:active {
+    BACKGROUND: url(../../error/404/04.png) 0px -48px
+}
+
+.c3 {
+    FONT-SIZE: 12px;
+    COLOR: #999;
+    HEIGHT: 180px;
+    TEXT-ALIGN: center
+}
+
+#bf {
+    LEFT: 0px;
+    WIDTH: 100%;
+    POSITION: absolute;
+    TOP: 269px
+}
+
+.bf1 {
+    PADDING-LEFT: 32px;
+    MARGIN: 0px auto;
+    WIDTH: 99px
+}
+
+.bd {
+    OVERFLOW: hidden;
+    HEIGHT: 600px
+}
+
+#box {
+    LEFT: 0px;
+    WIDTH: 100%;
+    POSITION: absolute;
+    TOP: 165px;
+    TEXT-ALIGN: center
+}
+
+.bf1 {
+    PADDING-LEFT: 32px;
+    MARGIN: 0px auto;
+    WIDTH: 99px
+}

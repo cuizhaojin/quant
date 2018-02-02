@@ -176,20 +176,56 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">日志</a>
+                        <li class="active"><a href="#log" data-toggle="tab" aria-expanded="true">日志</a>
                         </li>
-                        <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false">错误</a>
+                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">错误</a>
+                        </li>
+                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">回测</a>
+                        </li>
+                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">交易</a>
+                        </li>
+                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">持仓</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
-                        <div class="tab-pane fade active in" id="home">
-                            <h4>日志</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <div class="tab-pane fade active in" id="log">
+                            <div class="less-container">
+                                <div>11:25:06.976 [http-nio-8088-exec-9] DEBUG com.skin.finder.servlet.LessServlet(353) - tail.time: 0.140172
+                                </div>
+                            </div>
+                            <div class="less-status-bar">
+                                <div style="height: 18px;">
+                                    <span class="ctrl">
+                                        <input id="tail-reload-btn" type="button" class="button" value="刷 新">
+                                        <input id="tail-clear-btn" type="button" class="button" value="清 空">
+                                        <input id="tail-stop-btn" type="button" class="button" value="开 始">
+                                        <input id="tail-select-btn" type="button" class="button" value="全 选">
+                                        <input id="tail-find-btn" type="button" class="button" value="过 滤">
+                                    </span>
+                                    <span class="pad4"><input id="tail-reload-interval" type="hidden" class="text w30" value="1"></span>
+                                    <span class="pad4"><input id="tail-auto-scroll" type="checkbox" class="checkbox" checked="true">自动滚动</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="profile">
-                            <h4>错误</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <div class="tab-pane fade" id="errorlog">
+                            <div class="less-container">
+                                <div>11:25:06.976 [http-nio-8088-exec-9] DEBUG com.skin.finder.servlet.LessServlet(353) - tail.time: 0.140172
+                                </div>
+                            </div>
+                            <div class="less-status-bar">
+                                <div style="height: 18px;">
+                                    <span class="ctrl">
+                                        <input  type="button" class="button" value="刷 新">
+                                        <input  type="button" class="button" value="清 空">
+                                        <input  type="button" class="button" value="开 始">
+                                        <input  type="button" class="button" value="全 选">
+                                        <input  type="button" class="button" value="过 滤">
+                                    </span>
+                                    <span class="pad4"><input  type="hidden" class="text w30" value="1"></span>
+                                    <span class="pad4"><input  type="checkbox" class="checkbox" checked="true">自动滚动</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -229,6 +265,11 @@
     var datas = ${data};
     var algorithm = datas.result[0].algorithm;
     editor.setValue(algorithm);
+    editor.focus();  //获取焦点
+    //把焦点移到内容的最后面
+    let session = editor.getSession();
+    let count = session.getLength();
+    editor.gotoLine(count, session.getLine(count - 1).length,true);
     //editor.getValue(); // or session.getValue
 
 </script>

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class QuantManagerServiceImpl {
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(QuantManagerServiceImpl.class);
 
-    //回测策略url 接口地址
+    //添加回测策略url 接口地址
     private final String add_algorithm_url = PropertiesUtils.getPropertiesValue("uat_add_algorithm");
     //根据策略Id 查询策略详情 接口地址
     private final String search_algorithm_url = PropertiesUtils.getPropertiesValue("uat_search_algorithm");

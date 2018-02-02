@@ -152,7 +152,7 @@ public class QuantManagerController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/addAlgorithm")
+    @RequestMapping(value = "/modifyAlgorithm")
     public ModelAndView modifyAlgorithm(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         String userId = request.getParameter("userId");
@@ -180,7 +180,7 @@ public class QuantManagerController {
     }
 
     /**
-     * 封装 "修改策略接口"
+     * 封装 "删除策略接口"
      * @param model
      * @param request
      * @param response

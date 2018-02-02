@@ -38,6 +38,7 @@ function onConnectionLost(responseObject) {
 
 // called when a message arrives
 function onMessageArrived(message) {
+    tailDingYue(message.payloadString);
     console.log("onMessageArrived:"+message.payloadString);
 }
 
@@ -76,5 +77,44 @@ function OnSubFailed(responseObject) {
     if (responseObject.errorCode !== 0) {
         console.log("onSubFailed:" + responseObject.errorMessage);
         console.log(responseObject);
+    }
+}
+function tailDingYue(message) {
+    var obj = eval('('+message+')');
+    var flag = obj[0].type;
+    switch (flag) {
+        //error
+        case -1:
+            break;
+        //log
+        case 0:
+            var errortype = obj[0].content.log_level;
+            console.info(obj[0].content.log_info);
+            switch (errortype){
+                //info
+                case 1:
+                    $("#log .less-container").append("<div>"+obj[0].content.log_info+"</div>");
+                    break;
+                //warn
+                case 2:
+                    break;
+                //errorlog
+                case 3:
+                    $("#errorlog .less-container").append("<div>"+obj[0].content.log_info+"</div>");
+                    break;
+                //critical
+                case 4:
+                    break;
+            };
+            break;
+        //backtest
+        case 1:
+            break;
+        //tradelist
+        case 2:
+            break;
+        //holdlist
+        case 3:
+            break;
     }
 }
