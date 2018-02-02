@@ -38,7 +38,8 @@ function onConnectionLost(responseObject) {
 
 // called when a message arrives
 function onMessageArrived(message) {
-    tailDingYue(message.payloadString);
+    setInterval("tailDingYues()",3000);
+    //tailDingYue(message.payloadString);
     console.log("onMessageArrived:"+message.payloadString);
 }
 
@@ -94,6 +95,7 @@ function tailDingYue(message) {
                 //info
                 case 1:
                     $("#log .less-container").append("<div>"+obj[0].content.log_info+"</div>");
+                    $("#log .less-container").scrollTop($('#log .less-container')[0].scrollHeight);
                     break;
                 //warn
                 case 2:
