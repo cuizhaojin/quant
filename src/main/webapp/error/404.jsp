@@ -36,7 +36,7 @@
     <h2>sorry…提醒您访问的页面不存在！！！</h2>
 
     <div class="c2">
-        <a class="home" href="${contextPath}/">我的策略</a>
+        <a class="home" href="${contextPath}/manager/list">我的策略</a>
     </div>
     <div class="c3">
         【后台管理】提醒您 - 您可能输入了错误的网址，或者该网页已删除或移动

@@ -2,28 +2,94 @@ function submitSave(){
     var python_code = editor.getValue();
     var rootPath = "http://localhost:8089/quant"
     $.ajax({
-        url: rootPath + '/manager/addAlgorithm',
+        url: rootPath + '/manager/modifyAlgorithm',
         async: true,
         type: 'POST',
         data: {
             "userId":"123456",
-            "algorithmName": "test_001",
+            "algorithmName": "万宁",
+            "algorithmId":"200354",
             "code": python_code
         },
         dataType: 'json',
         success: function (data) {
             if (data.result == 1) {
-                console.info(data.out);
+                console.info(data);
+                layer.msg('修改策略成功');
             } else if (data.result == 0) {
-
+                console.info(data);
+                layer.msg('修改策略失败');
             }
         },
         error: function () {
-
+            layer.msg('修改策略失败');
         }
 
     });
 }
+
+function submitAdd(){
+    var python_code = editor.getValue();
+    var rootPath = "http://localhost:8089/quant";
+    $.ajax({
+        url: rootPath + '/manager/addAlgorithm',
+        async: true,
+        type: 'POST',
+        data: {
+            "userId":"123456",
+            "algorithmName": "test_cui",
+            "code": python_code
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.result == 1) {
+                console.info(data);
+                layer.msg('添加策略成功');
+                //修改 添加按钮 -> 修改按钮
+                $("#editbtn a").eq(0).remove();
+                var html = "<a class='btn btn-default'onclick='submitSave()' id='submitSave'> 修改</a>";
+                $("#editbtn").prepend(html);
+            } else if (data.result == 0) {
+                console.info(data);
+                layer.msg('添加策略失败');
+            }
+        },
+        error: function () {
+            layer.msg('添加策略失败');
+        }
+    });
+}
+
+
+function submitRun(){
+    var python_code = editor.getValue();
+    var rootPath = "http://localhost:8089/quant";
+    $.ajax({
+        url: rootPath + '/manager/executeAlgorithm',
+        async: true,
+        type: 'POST',
+        data: {
+            "userId":"123456",
+            "algorithmId": "200354",
+            "code": python_code
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.result == 1) {
+                console.info(data);
+                layer.msg('执行策略成功');
+            } else if (data.result == 0) {
+                console.info(data);
+                layer.msg('执行策略失败');
+            }
+        },
+        error: function () {
+            layer.msg('执行策略失败');
+        }
+    });
+}
+
+
 
 function allscreen() {
     if ($("#editpanel").attr("class") == 'col-md-9') {

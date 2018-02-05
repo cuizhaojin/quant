@@ -138,10 +138,18 @@
                                     <i class="icon-fullscreen" onclick="allscreen();" id="screen-set"></i>
                                 </a> 源代码
                             </div>
-                            <div class="col-xs-6 text-right">
-                                <a class="btn btn-default" onclick="submitSave()" id="submitSave">
-                                    保存
-                                </a>
+                            <div class="col-xs-6 text-right" id="editbtn">
+                                <c:if test="${pageflag=='new'}">
+                                    <a class="btn btn-default" onclick="submitAdd()" id="submitSave">
+                                        保存
+                                    </a>
+                                </c:if>
+                                <c:if test="${pageflag=='edit'}">
+                                    <a class="btn btn-default" onclick="submitSave()" id="submitSave">
+                                        修改
+                                    </a>
+                                </c:if>
+
                                 <a class="btn btn-default" onclick="submitRun()" id="submitRun">
                                     <span class="icon-play"></span> RUN
                                 </a>
@@ -151,15 +159,7 @@
                 </div>
                 <div class="panel-body" style="height: 405px;padding:0px">
                     <!--代码输入框（注意请务必设置高度，否则无法显示）-->
-                    <pre id="code" class="ace_editor"><textarea class="ace_text-input">
-                        #include <cstdio>
-                        int main(){
-                        int n,m;
-                        scanf("%d %d",&n,&m);
-                        printf("%d",n+m);
-                        return 0;
-                        }
-                    </textarea>
+                    <pre id="code" class="ace_editor"><textarea class="ace_text-input">#请输入您的代码</textarea>
                     </pre>
                 </div>
             </div>
@@ -262,9 +262,13 @@
         enableLiveAutocompletion: true
     });
     //设置值 获取值
-    var datas = ${data};
-    var algorithm = datas.result[0].algorithm;
-    editor.setValue(algorithm);
+    var datas;
+    var algorithm;
+    if(${data}){
+        datas = ${data};
+        algorithm = datas.result[0].algorithm;
+        editor.setValue(algorithm);
+    }
     editor.focus();  //获取焦点
     //把焦点移到内容的最后面
     let session = editor.getSession();

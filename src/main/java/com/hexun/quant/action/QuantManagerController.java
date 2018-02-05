@@ -1,6 +1,7 @@
 package com.hexun.quant.action;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hexun.quant.service.QuantManagerServiceImpl;
 import com.hexun.quant.utils.ModelAndViewUtil;
@@ -41,16 +42,27 @@ public class QuantManagerController {
                                HttpServletResponse response,
                                @PathVariable("algorithmId")String algorithmId) {
 
-        String jsonstr = quantManagerServiceImpl.apiForGetAlgorithmById(algorithmId);
+        try{
+            String jsonstr = quantManagerServiceImpl.apiForGetAlgorithmById(algorithmId);
+            JSONObject jsonObject = JSON.parseObject(jsonstr);
+            //判断json str
+            if("0".equals(jsonObject.get("code").toString())){
+                JSONArray jsonArray = jsonObject.getJSONArray("result");
+                //判断返回值中是否有策略代码
+                if(jsonArray.size()<1){
+                    return ModelAndViewUtil.Jsp("error/404");
+                }
+                model.addAttribute("pageflag","edit");
+                model.addAttribute("data",jsonstr);
+            }else{
+                //接口反馈code非 0状态码
+                return ModelAndViewUtil.Jsp("error/error");
+            }
 
-        //判断json str
-
-
-
-
-
-
-        model.addAttribute("data",jsonstr);
+        }catch (Exception ex){
+            logger.error("编辑策略页面跳转异常" + ex.getMessage(), ex);
+            return ModelAndViewUtil.Json_error("编辑策略页面跳转异常");
+        }
         return ModelAndViewUtil.Jsp("WEB-INF/view/edit");
     }
 
@@ -64,6 +76,8 @@ public class QuantManagerController {
     @RequestMapping(value = "/new")
     public ModelAndView toAdd(Model model, HttpServletRequest request, HttpServletResponse response) {
 
+        model.addAttribute("pageflag","new");
+        model.addAttribute("data",false);
         return ModelAndViewUtil.Jsp("WEB-INF/view/edit");
     }
 
@@ -136,7 +150,11 @@ public class QuantManagerController {
             jsonparam.put("body",code);
             String result = quantManagerServiceImpl.apiForAddAlgorithm(userId,algorithmName,jsonparam);
             JSONObject jsonObject = JSON.parseObject(result);
-            return ModelAndViewUtil.Json_ok("out", jsonObject);
+            if("0".equals(jsonObject.get("code").toString())){
+                return ModelAndViewUtil.Json_ok("添加策略成功");
+            }else{
+                return ModelAndViewUtil.Json_error(jsonObject); //添加策略失败，将异常信息前抛出，方便页面 console.info
+            }
         } catch (Exception e) {
             logger.error("添加策略接口出现异常" + e.getMessage(), e);
             return ModelAndViewUtil.Json_error("添加策略接口异常");
@@ -156,9 +174,13 @@ public class QuantManagerController {
     public ModelAndView modifyAlgorithm(Model model, HttpServletRequest request, HttpServletResponse response) {
 
         String userId = request.getParameter("userId");
+        String algorithmId = request.getParameter("algorithmId");
         String algorithmName = request.getParameter("algorithmName");
         String code = request.getParameter("code");
         try {
+            if(!StringUtils.isNotEmpty(algorithmId)) {
+                return ModelAndViewUtil.Json_error("algorithmId参数为空");
+            }
             if(!StringUtils.isNotEmpty(userId)) {
                 return ModelAndViewUtil.Json_error("userId参数为空");
             }
@@ -170,9 +192,13 @@ public class QuantManagerController {
             }
             JSONObject jsonparam = new JSONObject();
             jsonparam.put("body",code);
-            String result = quantManagerServiceImpl.apiForModifyAlgorithm(userId,algorithmName,jsonparam);
+            String result = quantManagerServiceImpl.apiForModifyAlgorithm(userId,algorithmId,algorithmName,jsonparam);
             JSONObject jsonObject = JSON.parseObject(result);
-            return ModelAndViewUtil.Json_ok("out", jsonObject);
+            if("0".equals(jsonObject.get("code").toString())){
+                return ModelAndViewUtil.Json_ok("修改策略成功");
+            }else{
+                return ModelAndViewUtil.Json_error(jsonObject); //修改策略失败，将异常信息前抛出，方便页面 console.info
+            }
         } catch (Exception e) {
             logger.error("修改策略接口出现异常" + e.getMessage(), e);
             return ModelAndViewUtil.Json_error("修改策略接口异常");
@@ -193,7 +219,7 @@ public class QuantManagerController {
         String algorithmId = request.getParameter("algorithmId");
         try {
             if(!StringUtils.isNotEmpty(algorithmId)){
-                return ModelAndViewUtil.Json_error("algorithmName参数为空");
+                return ModelAndViewUtil.Json_error("algorithmId参数为空");
             }
             String result = quantManagerServiceImpl.apiForDeleteAlgorithm(userId,algorithmId);
             JSONObject jsonObject = JSON.parseObject(result);
@@ -201,6 +227,84 @@ public class QuantManagerController {
         } catch (Exception e) {
             logger.error("删除策略接口出现异常" + e.getMessage(), e);
             return ModelAndViewUtil.Json_error("删除策略接口异常");
+        }
+    }
+
+    /**
+     * 执行 策略
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/executeAlgorithm")
+    public ModelAndView executeAlgorithm(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        String userId = request.getParameter("userId");
+        String algorithmId = request.getParameter("algorithmId");
+        String code = request.getParameter("code");
+        JSONObject jsonparam = new JSONObject();
+        jsonparam.put("body",code);
+        try {
+            if(!StringUtils.isNotEmpty(code)){
+                return ModelAndViewUtil.Json_error("code参数为空");
+            }
+            if(!StringUtils.isNotEmpty(algorithmId)){
+                return ModelAndViewUtil.Json_error("algorithmId参数为空");
+            }
+            //分配taskid 开始
+            logger.info("策略引擎分配taskid start---------");
+            String result = quantManagerServiceImpl.apiForGetTaskId(userId);
+            JSONObject gettask_jsonObject= JSON.parseObject(result);
+            if("0".equals(gettask_jsonObject.get("code").toString())){
+                String taskId = gettask_jsonObject.get("task_id").toString();
+                logger.info("分配 taskid success; taskid:"+taskId);
+                String execute_result = quantManagerServiceImpl.apiForExecuteTask(userId,taskId,algorithmId,jsonparam);
+                JSONObject jsonObject = JSON.parseObject(execute_result);
+                if("0".equals(jsonObject.get("code").toString())){
+                    return ModelAndViewUtil.Json_ok("执行策略成功");
+                }else{
+                    return ModelAndViewUtil.Json_error(jsonObject);
+                }
+            }else{
+                logger.info("获取taskid 失败 reason:"+gettask_jsonObject.get("info"));
+                return ModelAndViewUtil.Json_error(gettask_jsonObject);
+            }
+        } catch (Exception e) {
+            logger.error("执行策略接口出现异常" + e.getMessage(), e);
+            return ModelAndViewUtil.Json_error("执行策略接口异常");
+        }
+    }
+
+    /**
+     * 查询策略执行结果  分类型
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/selectExecuteResult")
+    public ModelAndView selectExecuteResult(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        String taskId = request.getParameter("taskId");
+        String resultType = request.getParameter("resultType");
+        try {
+            if(!StringUtils.isNotEmpty(taskId)){
+                return ModelAndViewUtil.Json_error("taskId参数为空");
+            }
+            if(!StringUtils.isNotEmpty(resultType)){
+                return ModelAndViewUtil.Json_error("resultType参数为空");
+            }
+            String execute_result = quantManagerServiceImpl.apiForGetExecuteTaskResult(taskId,resultType);
+            JSONObject jsonObject = JSON.parseObject(execute_result);
+            if("0".equals(jsonObject.get("code").toString())){
+                return ModelAndViewUtil.Json_ok(jsonObject);
+            }else{
+                return ModelAndViewUtil.Json_error(jsonObject);
+            }
+        } catch (Exception e) {
+            logger.error("查询策略结果接口出现异常" + e.getMessage(), e);
+            return ModelAndViewUtil.Json_error("查询策略结果接口异常");
         }
     }
 

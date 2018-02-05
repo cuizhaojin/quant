@@ -35,7 +35,7 @@
     </div>
     <h2>sorry..网页出现错误！</h2>
     <div class="c2">
-        <a class="home" href="${contextPath}/">我的策略</a>
+        <a class="home" href="${contextPath}/manager/list">我的策略</a>
     </div>
     <div class="c3">
         【后台管理】提醒您 - 网站服务器出现错误，请稍后再试

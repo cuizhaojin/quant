@@ -45,11 +45,6 @@ public class QuantManagerServiceImpl {
         geturl = geturl + params;
         String postresult = HttpUtils.sendPostJson(param, geturl, "UTF-8");
         if (StringUtils.isNotEmpty(postresult)) {
-            /*JSONArray arrayJson = JSONArray.parseArray(postresult);
-            for (int i = 0; i < arrayJson.size(); i++) {
-                JSONObject data_subobj = (JSONObject) arrayJson.get(i);
-                result = data_subobj.getString("out");
-            }*/
             result = postresult;
         }
         logger.info("result=" + result);
@@ -82,19 +77,14 @@ public class QuantManagerServiceImpl {
      * @param param
      * @return
      */
-    public String apiForModifyAlgorithm(String userId,String algorithmName,JSONObject param){
+    public String apiForModifyAlgorithm(String userId,String algorithmId,String algorithmName,JSONObject param){
         String result = "";
         String geturl = modify_algorithm_url;
-        String params = "?algorithm_name="+algorithmName+"&user_id=" + userId ;
+        String params = "?algorithm_id="+algorithmId+"&algorithm_name="+algorithmName+"&user_id=" + userId ;
         logger.info("geturl=   " + geturl + params);
         geturl = geturl + params;
         String postresult = HttpUtils.sendPostJson(param, geturl, "UTF-8");
         if (StringUtils.isNotEmpty(postresult)) {
-            /*JSONArray arrayJson = JSONArray.parseArray(postresult);
-            for (int i = 0; i < arrayJson.size(); i++) {
-                JSONObject data_subobj = (JSONObject) arrayJson.get(i);
-                result = data_subobj.getString("out");
-            }*/
             result = postresult;
         }
         logger.info("result=" + result);
@@ -155,11 +145,6 @@ public class QuantManagerServiceImpl {
         geturl = geturl + params;
         String postresult = HttpUtils.sendPostJson(param, geturl, "UTF-8");
         if (StringUtils.isNotEmpty(postresult)) {
-            /*JSONArray arrayJson = JSONArray.parseArray(postresult);
-            for (int i = 0; i < arrayJson.size(); i++) {
-                JSONObject data_subobj = (JSONObject) arrayJson.get(i);
-                result = data_subobj.getString("out");
-            }*/
             result = postresult;
         }
         logger.info("result=" + result);

@@ -40,8 +40,7 @@ function onConnectionLost(responseObject) {
 
 // called when a message arrives
 function onMessageArrived(message) {
-    setInterval("tailDingYues()",3000);
-    //tailDingYue(message.payloadString);
+    tailDingYue(message.payloadString);
     console.log("onMessageArrived:"+message.payloadString);
 }
 
