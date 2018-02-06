@@ -35,7 +35,7 @@
     <div class="subnavbar-inner">
         <div class="container">
             <ul class="mainnav">
-                <li><a href="${contextPath}/manager/edit/123"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
+                <li><a href="${contextPath}/manager/new"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
                 <li><a href="${contextPath}/manager/benefit"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
                 <li class="subnavbar-open-right"><a href="${contextPath}/manager/testdetail"><i class="glyphicon glyphicon-dashboard"></i><span>性能指标</span> </a></li>
                 <li class="active"><a href="${contextPath}/manager/list"><i class="glyphicon glyphicon-list-alt"></i><span>我的策略</span> </a> </li>

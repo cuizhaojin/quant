@@ -152,7 +152,7 @@ public class QuantManagerController {
             String result = quantManagerServiceImpl.apiForAddAlgorithm(userId,algorithmName,jsonparam);
             JSONObject jsonObject = JSON.parseObject(result);
             if("0".equals(jsonObject.get("code").toString())){
-                return ModelAndViewUtil.Json_ok("添加策略成功");
+                return ModelAndViewUtil.Json_ok(jsonObject);
             }else{
                 return ModelAndViewUtil.Json_error(jsonObject); //添加策略失败，将异常信息前抛出，方便页面 console.info
             }

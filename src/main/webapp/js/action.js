@@ -78,6 +78,7 @@ function submitAddAction(){
                 $("#editbtn a").eq(0).remove();
                 var html = "<a class='btn btn-default'onclick='submitSave()' id='submitSave'> 修改</a>";
                 $("#editbtn").prepend(html);
+                $(window).attr('location',rootPath+"/manager/edit/"+data.algorithm_id);
             } else if (data.result == 0||data.result == 2) {
                 console.info(data);
                 layer.msg('添加策略失败');
