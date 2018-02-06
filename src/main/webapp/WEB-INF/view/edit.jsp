@@ -28,19 +28,6 @@
     <script src="${contextPath}/js/action.js"  type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/js/mqtt-action.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="${contextPath}/css/style.css">
-    <script>
-        $(function () {
-            layer.msg('提交失败,请重试');
-
-            /* layer.msg('确定取消关注?', {
-             time: 0 //不自动关闭
-             ,btn: ['嗯呐', '返回']
-             ,yes: function(index){
-             layer.close(index);
-             }
-             });*/
-        })
-    </script>
 </head>
 <body>
 <!--导航-->

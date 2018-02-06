@@ -1,5 +1,20 @@
 function submitSave(){
+    layer.msg('确定修改?', {
+        time: 0 //不自动关闭
+        ,btn: ['嗯呐', '返回']
+        ,yes: function(index){
+            submitSaveAction();
+            layer.close(index);
+        }
+    });
+}
+
+function submitSaveAction(){
     var python_code = editor.getValue();
+    if(python_code==undefined || python_code=="" || python_code==null){
+        layer.msg('策略代码为空');
+        return;
+    }
     var rootPath = "http://localhost:8089/quant"
     $.ajax({
         url: rootPath + '/manager/modifyAlgorithm',
@@ -27,10 +42,23 @@ function submitSave(){
 
     });
 }
-
 function submitAdd(){
+    layer.msg('确定添加?', {
+        time: 0 //不自动关闭
+        ,btn: ['嗯呐', '返回']
+        ,yes: function(index){
+            submitAddAction();
+            layer.close(index);
+        }
+    });
+}
+function submitAddAction(){
     var python_code = editor.getValue();
     var rootPath = "http://localhost:8089/quant";
+    if(python_code==undefined || python_code=="" || python_code==null){
+        layer.msg('策略代码为空');
+        return;
+    }
     $.ajax({
         url: rootPath + '/manager/addAlgorithm',
         async: true,
@@ -60,9 +88,22 @@ function submitAdd(){
     });
 }
 
-
 function submitRun(){
+    layer.msg('确定运行吗?', {
+        time: 0 //不自动关闭
+        ,btn: ['嗯呐', '返回']
+        ,yes: function(index){
+            submitRunAction();
+            layer.close(index);
+        }
+    });
+}
+function submitRunAction(){
     var python_code = editor.getValue();
+    if(python_code==undefined || python_code=="" || python_code==null){
+        layer.msg('策略代码为空');
+        return;
+    }
     var rootPath = "http://localhost:8089/quant";
     $.ajax({
         url: rootPath + '/manager/executeAlgorithm',
