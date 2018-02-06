@@ -16,6 +16,7 @@ function submitSaveAction(){
         return;
     }
     var rootPath = "http://localhost:8089/quant"
+    var algorithmId = $("#algorithmId").val();
     $.ajax({
         url: rootPath + '/manager/modifyAlgorithm',
         async: true,
@@ -23,7 +24,7 @@ function submitSaveAction(){
         data: {
             "userId":"123456",
             "algorithmName": "万宁",
-            "algorithmId":"200354",
+            "algorithmId":algorithmId,
             "code": python_code
         },
         dataType: 'json',
@@ -105,13 +106,14 @@ function submitRunAction(){
         return;
     }
     var rootPath = "http://localhost:8089/quant";
+    var algorithmId = $("#algorithmId").val();
     $.ajax({
         url: rootPath + '/manager/executeAlgorithm',
         async: true,
         type: 'POST',
         data: {
             "userId":"123456",
-            "algorithmId": "200354",
+            "algorithmId": algorithmId,
             "code": python_code
         },
         dataType: 'json',

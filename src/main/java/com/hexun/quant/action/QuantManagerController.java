@@ -52,6 +52,7 @@ public class QuantManagerController {
                 if(jsonArray.size()<1){
                     return ModelAndViewUtil.Jsp("error/404");
                 }
+                model.addAttribute("algorithmId",algorithmId);
                 model.addAttribute("pageflag","edit");
                 model.addAttribute("data",jsonstr);
             }else{

@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="${contextPath}/css/style.css">
 </head>
 <body>
+<input type="hidden" value="${algorithmId}" id="algorithmId"/>
 <!--导航-->
 <div id="content-header" style="background-color: #e5e5e5;">
     <div class="container">
