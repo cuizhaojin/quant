@@ -100,6 +100,7 @@ function tailDingYue(message) {
                     break;
                 //warn
                 case 2:
+                    $("#errorlog .less-container").append("<div>"+obj[0].content.log_info+"</div>");
                     break;
                 //errorlog
                 case 3:
@@ -107,17 +108,57 @@ function tailDingYue(message) {
                     break;
                 //critical
                 case 4:
+                    $("#errorlog .less-container").append("<div>"+obj[0].content.log_info+"</div>");
                     break;
             };
             break;
         //backtest
         case 1:
+            var html = "<tr><td>"+obj[0].content.date+"</td>" +
+                "<td>"+parseFloat(obj[0].content.alpha)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.info_ratio)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.sharpe_ratio)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.stock_returns)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.beta)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.volatility)+"</td>" +
+                "<td>"+obj[0].content.max_drawdown+"</td>" +
+                "<td>"+parseFloat(obj[0].content.benchmark_returns)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.total_profit)+"</td>" +
+                "<td>"+parseFloat(obj[0].content.capital_left)+"</td></tr>";
+            $("#backtest tbody").append(html);
             break;
         //tradelist
         case 2:
+            var content = obj[0].content;
+            var tradelist = content.trade_list;
+            var datestr = content.date;
+            var stockid = content.stockid;
+            var htmlstr ="";
+            for(var i = 0 ;i < tradelist.length; i ++ ){
+                var tr = "<tr><td>"+datestr+"</td>" +
+                    "<td>"+stockid+"</td>" +
+                    "<td>***</td>" +
+                    "<td>"+tradelist[i].bs+"</td>" +
+                    "<td>"+tradelist[i].order_type+"</td>" +
+                    "<td>"+tradelist[i].mount+"</td>" +
+                    "<td>"+tradelist[i].price+"</td>" +
+                    "<td>"+tradelist[i].profit+"</td>" +
+                    "<td>"+tradelist[i].act_type+"</td>" +
+                    "<td>"+tradelist[i].fee+"</td></tr>";
+                htmlstr = htmlstr+ tr;
+            }
+            $("#tradelist tbody").append(htmlstr);
             break;
         //holdlist
         case 3:
+            var html = "<tr><td>"+obj[0].content.date+"</td>" +
+                "<td>"+obj[0].content.stockid+"</td>" +
+                "<td>*****</td>" +
+                "<td>"+obj[0].content.avg_price+"</td>" +
+                "<td>"+obj[0].content.profit+"</td>" +
+                "<td>"+obj[0].content.mount+"</td>" +
+                "<td>"+obj[0].content.close+"</td></tr>";
+            $("#holdlist tbody").append(html);
             break;
     }
 }

@@ -413,3 +413,9 @@ div.less-status-bar span input.checkbox {
     vertical-align: middle;
     display: inline-block;
 }
+#backtest{
+    height: 230px;
+}
+.table-responsive{
+    height: 230px;
+}

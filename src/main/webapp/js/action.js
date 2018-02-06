@@ -32,7 +32,7 @@ function submitSaveAction(){
             if (data.result == 1) {
                 console.info(data);
                 layer.msg('修改策略成功');
-            } else if (data.result == 0) {
+            } else if (data.result == 0||data.result == 2) {
                 console.info(data);
                 layer.msg('修改策略失败');
             }
@@ -78,7 +78,7 @@ function submitAddAction(){
                 $("#editbtn a").eq(0).remove();
                 var html = "<a class='btn btn-default'onclick='submitSave()' id='submitSave'> 修改</a>";
                 $("#editbtn").prepend(html);
-            } else if (data.result == 0) {
+            } else if (data.result == 0||data.result == 2) {
                 console.info(data);
                 layer.msg('添加策略失败');
             }
@@ -100,6 +100,7 @@ function submitRun(){
     });
 }
 function submitRunAction(){
+
     var python_code = editor.getValue();
     if(python_code==undefined || python_code=="" || python_code==null){
         layer.msg('策略代码为空');
@@ -120,8 +121,14 @@ function submitRunAction(){
         success: function (data) {
             if (data.result == 1) {
                 console.info(data);
+                //清空控制台
+                $("#log .less-container").empty();
+                $("#errorlog .less-container").empty();
+                $("#backtest tbody").empty();
+                $("#tradelist tbody").empty();
+                $("#holdlist tbody").empty();
                 layer.msg('执行策略成功');
-            } else if (data.result == 0) {
+            } else if (data.result == 0||data.result == 2) {
                 console.info(data);
                 layer.msg('执行策略失败');
             }

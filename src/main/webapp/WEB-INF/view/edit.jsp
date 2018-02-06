@@ -168,18 +168,18 @@
                         </li>
                         <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">错误</a>
                         </li>
-                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">回测</a>
+                        <li class=""><a href="#backtest" data-toggle="tab" aria-expanded="false">回测</a>
                         </li>
-                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">交易</a>
+                        <li class=""><a href="#tradelist" data-toggle="tab" aria-expanded="false">交易</a>
                         </li>
-                        <li class=""><a href="#errorlog" data-toggle="tab" aria-expanded="false">持仓</a>
+                        <li class=""><a href="#holdlist" data-toggle="tab" aria-expanded="false">持仓</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
                         <div class="tab-pane fade active in" id="log">
                             <div class="less-container">
-                                <div>11:25:06.976 [http-nio-8088-exec-9] DEBUG com.skin.finder.servlet.LessServlet(353) - tail.time: 0.140172
+                                <div>******************************** log ismonitoring **********************************
                                 </div>
                             </div>
                             <div class="less-status-bar">
@@ -198,7 +198,7 @@
                         </div>
                         <div class="tab-pane fade" id="errorlog">
                             <div class="less-container">
-                                <div>11:25:06.976 [http-nio-8088-exec-9] DEBUG com.skin.finder.servlet.LessServlet(353) - tail.time: 0.140172
+                                <div>******************************** log ismonitoring **********************************
                                 </div>
                             </div>
                             <div class="less-status-bar">
@@ -212,6 +212,89 @@
                                     </span>
                                     <span class="pad4"><input  type="hidden" class="text w30" value="1"></span>
                                     <span class="pad4"><input  type="checkbox" class="checkbox" checked="true">自动滚动</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="backtest">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!--   Kitchen Sink -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>日期</th>
+                                                <th>alpha</th>
+                                                <th>信息比率</th>
+                                                <th>夏普比率</th>
+                                                <th>回测收益</th>
+                                                <th>beta</th>
+                                                <th>波动率</th>
+                                                <th>最大回测</th>
+                                                <th>基准收益</th>
+                                                <th>总盈亏</th>
+                                                <th>可用权益</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- End  Kitchen Sink -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tradelist">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!--   Kitchen Sink -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>日期</th>
+                                                <th>股票代码</th>
+                                                <th>多空</th>
+                                                <th>多卖</th>
+                                                <th>报单类型</th>
+                                                <th>数量</th>
+                                                <th>价格</th>
+                                                <th>平仓盈亏</th>
+                                                <th>操作类型</th>
+                                                <th>手续费佣金</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- End  Kitchen Sink -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="holdlist">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!--   Kitchen Sink -->
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>日期</th>
+                                                <th>股票代码</th>
+                                                <th>多空</th>
+                                                <th>开仓均价</th>
+                                                <th>持仓盈亏</th>
+                                                <th>数量</th>
+                                                <th>收盘价/结算价</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- End  Kitchen Sink -->
                                 </div>
                             </div>
                         </div>
