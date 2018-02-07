@@ -60,7 +60,7 @@
 <div class="container">
 <div class="row">
     <div class="col-md-12">
-        <button type="button" class="btn btn-primary"><i class="icon-plus"></i> 添加策略</button>
+        <button type="button" class="btn btn-primary" onclick="location='/quant/manager/new';"><i class="icon-plus"></i> 添加策略</button>
         <button type="button" class="btn btn-default disabled" id="rename-algorithm" style="margin-left: 20px;">重命名</button>
         <button type="button" class="btn btn-default disabled" id="del-algorithm"><i class="glyphicon glyphicon-trash"></i> 删除</button>
     </div>
@@ -74,8 +74,8 @@
                 <td class="align-left">名称</td>
                 <td>分类</td>
                 <td>最后修改时间</td>
-                <td>历史编译运行</td>
-                <td>历史回测</td>
+                <td>历史编译运行（假数据）</td>
+                <td>历史回测（假数据）</td>
                 <td></td>
             </tr>
             </thead>

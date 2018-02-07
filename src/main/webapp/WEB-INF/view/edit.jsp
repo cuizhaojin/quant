@@ -28,6 +28,15 @@
     <script src="${contextPath}/js/action.js"  type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/js/mqtt-action.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="${contextPath}/css/style.css">
+    <script>
+        var flag = '${pageflag}';
+        if(flag =='new'){
+            $(document).attr("title", '新建策略');
+        }else{
+            $(document).attr("title", '编辑策略');
+        }
+
+    </script>
 </head>
 <body>
 <input type="hidden" value="${algorithmId}" id="algorithmId"/>
@@ -75,30 +84,16 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr style="border: hidden">
-                            <th>ID</th>
-                            <th>User</th>
-                            <th>Date</th>
+                            <th>策略id</th>
+                            <th>策略名称</th>
                         </tr>
-                        <tr>
-                            <td>183</td>
-                            <td>John Doe</td>
-                            <td>11-7-2014</td>
-                        </tr>
-                        <tr>
-                            <td>219</td>
-                            <td>Jane Doe</td>
-                            <td>11-7-2014</td>
-                        </tr>
-                        <tr>
-                            <td>657</td>
-                            <td>Bob Doe</td>
-                            <td>11-7-2014</td>
-                        </tr>
-                        <tr>
-                            <td>175</td>
-                            <td>Mike Doe</td>
-                            <td>11-7-2014</td>
-                        </tr>
+                        <c:forEach var="algorithmMain" items="${algorithmList.result}" end="6">
+                            <tr>
+                                <td style="vertical-align:middle">${algorithmMain.algorithm_id}</td>
+
+                                <td><img src="/quant/image/code_wizard.png" alt=""/> <a href="/quant/manager/edit/${algorithmMain.algorithm_id}" style="color: #333;" >${algorithmMain.algorithm_name}</a></td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                     <div style="position: absolute; left: 15%;bottom: 20px;">

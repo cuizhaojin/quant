@@ -44,9 +44,24 @@ public class QuantManagerController {
                                @PathVariable("algorithmId")String algorithmId) {
 
         try{
+            //获取策略详情
             String jsonstr = quantManagerServiceImpl.apiForGetAlgorithmById(algorithmId);
             JSONObject jsonObject = JSON.parseObject(jsonstr);
-            //判断json str
+            //获取我的策略列表
+            String userId = "123456";
+            String userAlgorithListStr = quantManagerServiceImpl.apiForGetAlgorithmByUserId(userId);
+            JSONObject userAlgorithList = JSON.parseObject(userAlgorithListStr);
+            //判断json userAlgorithListStr
+            if("0".equals(userAlgorithList.get("code").toString())) {
+                JSONArray jsonArray = userAlgorithList.getJSONArray("result");
+                //判断返回值中是否有策略代码
+                if (jsonArray.size() < 1) {
+                    return ModelAndViewUtil.Jsp("error/404");
+                }
+                model.addAttribute("algorithmList", userAlgorithList);
+            }
+
+            //判断json jsonstr
             if("0".equals(jsonObject.get("code").toString())){
                 JSONArray jsonArray = jsonObject.getJSONArray("result");
                 //判断返回值中是否有策略代码
@@ -77,6 +92,19 @@ public class QuantManagerController {
      */
     @RequestMapping(value = "/new")
     public ModelAndView toAdd(Model model, HttpServletRequest request, HttpServletResponse response) {
+        //获取我的策略列表
+        String userId = "123456";
+        String userAlgorithListStr = quantManagerServiceImpl.apiForGetAlgorithmByUserId(userId);
+        JSONObject userAlgorithList = JSON.parseObject(userAlgorithListStr);
+        //判断json userAlgorithListStr
+        if("0".equals(userAlgorithList.get("code").toString())) {
+            JSONArray jsonArray = userAlgorithList.getJSONArray("result");
+            //判断返回值中是否有策略代码
+            if (jsonArray.size() < 1) {
+                return ModelAndViewUtil.Jsp("error/404");
+            }
+            model.addAttribute("algorithmList", userAlgorithList);
+        }
 
         model.addAttribute("pageflag","new");
         model.addAttribute("data",false);
