@@ -305,7 +305,9 @@ $(document).ready(function(){
                          if (data.result == 1) {
                              console.info(data);
                              layer.msg('删除策略成功');
-                             window.location.reload();
+                             setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                                 window.location.reload();//页面刷新
+                             },1000);
                          } else if (data.result == 0||data.result == 2) {
                              console.info(data);
                              layer.msg('删除策略失败');
