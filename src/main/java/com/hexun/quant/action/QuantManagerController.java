@@ -202,9 +202,7 @@ public class QuantManagerController {
             String result = quantManagerServiceImpl.apiForAddAlgorithm(userId,algorithmName,jsonparam);
             JSONObject jsonObject = JSON.parseObject(result);
             if("0".equals(jsonObject.get("code").toString())){
-                return ModelAndViewUtil.Json_ok(
-
-                );
+                return ModelAndViewUtil.Json_ok(jsonObject);
             }else{
                 return ModelAndViewUtil.Json_error(jsonObject); //添加策略失败，将异常信息前抛出，方便页面 console.info
             }
@@ -276,7 +274,11 @@ public class QuantManagerController {
             }
             String result = quantManagerServiceImpl.apiForDeleteAlgorithm(userId,algorithmId);
             JSONObject jsonObject = JSON.parseObject(result);
-            return ModelAndViewUtil.Json_ok("out", jsonObject);
+            if("0".equals(jsonObject.get("code").toString())){
+                return ModelAndViewUtil.Json_ok("删除策略成功");
+            }else{
+                return ModelAndViewUtil.Json_error(jsonObject); //删除策略失败，将异常信息前抛出，方便页面 console.info
+            }
         } catch (Exception e) {
             logger.error("删除策略接口出现异常" + e.getMessage(), e);
             return ModelAndViewUtil.Json_error("删除策略接口异常");

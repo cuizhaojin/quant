@@ -278,43 +278,52 @@ $(document).ready(function(){
         }
     });
     $("#del-algorithm").click(function () {
-        BootstrapDialog.confirm("确定要删除?", function (a) {
-            if (a) {
-                var e = [];
-                var c = [];
-                $("#algo_table").find("tbody").find("input[type=checkbox]:checked").each(function (f, g) {
-                    if ($(g.parentNode).attr("_algorithmId")) {
-                        e.push($(g.parentNode).attr("_algorithmId"))
-                    } else {
-                        c.push($(g.parentNode).attr("_fId"))
-                    }
-                });
-                var b = e.join(",");
-                var d = c.join(",");
-                if (b) {
-                    Cy.ajax("/algorithm/index/del", {data: {algorithmId: b}, success: function (f) {
-                        if (f.status == 0) {
-                            BootstrapDialog.alert("删除成功", function () {
-                                window.location.reload()
-                            })
-                        } else {
-                            BootstrapDialog.alert("删除失败:" + f.msg)
-                        }
-                    }})
-                }
-                if (d) {
-                    Cy.ajax("/algorithm/index/DelFile?fId=" + d, {success: function (f) {
-                        if (f.code == "00000") {
-                            BootstrapDialog.alert("删除成功", function () {
-                                window.location.reload()
-                            })
-                        }
-                    }})
-                }
-            } else {
-                return
-            }
-        })
+         var rootPath = "http://localhost:8089/quant";
+         layer.msg('确定删除策略?', {
+         time: 0 //不自动关闭
+         ,btn: ['OK', '返回']
+         ,yes: function(index){
+             var e = [];
+             $("#algo_table").find("tbody").find("input[type=checkbox]:checked").each(function (f, g) {
+                 if ($(g.parentNode).attr("_algorithmId")) {
+                     e.push($(g.parentNode).attr("_algorithmId"))
+                 }
+             });
+             var b = e.join(",");
+             if (b && e.length==1){
+                 console.info(b);
+                 $.ajax({
+                     url: rootPath + '/manager/deleteAlgorithm',
+                     async: true,
+                     type: 'POST',
+                     data: {
+                         "userId":"123456",
+                         "algorithmId": b
+                     },
+                     dataType: 'json',
+                     success: function (data) {
+                         if (data.result == 1) {
+                             console.info(data);
+                             layer.msg('删除策略成功');
+                             window.location.reload();
+                         } else if (data.result == 0||data.result == 2) {
+                             console.info(data);
+                             layer.msg('删除策略失败');
+                         }
+                     },
+                     error: function () {
+                         layer.msg('删除策略失败');
+                     }
+
+                 });
+
+             }else{
+                 layer.msg('暂时不支持批量删除');
+             }
+             layer.close(index);
+         }
+         });
+
     });
     $("#algo_table").delegate("tr", "click", function (a) {
         a.stopPropagation()
