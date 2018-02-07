@@ -171,4 +171,23 @@ public class QuantManagerServiceImpl {
         logger.info("result=" + result);
         return result;
     }
+
+    /**
+     * 根据用户id 返回该用户所有的策略
+     * @param userId
+     * @return
+     */
+    public String apiForGetAlgorithmByUserId(String userId){
+        String result = "";
+        String geturl = search_algorithm_url;
+        String params = "?user_id="+userId;
+        logger.info("geturl=   " + geturl + params);
+        geturl = geturl + params;
+        String postresult = HttpUtils.sendGet(geturl,"UTF-8");
+        if (StringUtils.isNotEmpty(postresult)) {
+            result = postresult;
+        }
+        logger.info("result=" + result);
+        return result;
+    }
 }

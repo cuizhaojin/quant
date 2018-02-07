@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * Created by hexun on 2017/11/14.
@@ -54,7 +55,7 @@ public class QuantManagerController {
                 }
                 model.addAttribute("algorithmId",algorithmId);
                 model.addAttribute("pageflag","edit");
-                model.addAttribute("data",jsonstr);
+                model.addAttribute("data",jsonObject);
             }else{
                 //接口反馈code非 0状态码
                 return ModelAndViewUtil.Jsp("error/error");
@@ -93,6 +94,27 @@ public class QuantManagerController {
     @RequestMapping(value = "/list")
     public ModelAndView toMyAlgorithmlist(Model model, HttpServletRequest request, HttpServletResponse response) {
 
+        try{
+            String userId = "123456";
+            String jsonstr = quantManagerServiceImpl.apiForGetAlgorithmByUserId(userId);
+            JSONObject jsonObject = JSON.parseObject(jsonstr);
+            //判断json str
+            if("0".equals(jsonObject.get("code").toString())){
+                JSONArray jsonArray = jsonObject.getJSONArray("result");
+                //判断返回值中是否有策略代码
+                if(jsonArray.size()<1){
+                    return ModelAndViewUtil.Jsp("error/404");
+                }
+                model.addAttribute("algorithmList",jsonObject);
+            }else{
+                //接口反馈code非 0状态码
+                return ModelAndViewUtil.Jsp("error/error");
+            }
+
+        }catch (Exception ex){
+            logger.error("我的策略列表页面跳转异常" + ex.getMessage(), ex);
+            return ModelAndViewUtil.Json_error("我的策略列表页面跳转异常");
+        }
         return ModelAndViewUtil.Jsp("WEB-INF/view/algorithmlist");
     }
 
@@ -152,7 +174,9 @@ public class QuantManagerController {
             String result = quantManagerServiceImpl.apiForAddAlgorithm(userId,algorithmName,jsonparam);
             JSONObject jsonObject = JSON.parseObject(result);
             if("0".equals(jsonObject.get("code").toString())){
-                return ModelAndViewUtil.Json_ok(jsonObject);
+                return ModelAndViewUtil.Json_ok(
+
+                );
             }else{
                 return ModelAndViewUtil.Json_error(jsonObject); //添加策略失败，将异常信息前抛出，方便页面 console.info
             }

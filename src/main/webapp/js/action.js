@@ -1,3 +1,4 @@
+//修改回测
 function submitSave(){
     layer.msg('确定修改?', {
         time: 0 //不自动关闭
@@ -11,6 +12,7 @@ function submitSave(){
 
 function submitSaveAction(){
     var python_code = editor.getValue();
+    var algorithmName= $(".algo-title").html();
     if(python_code==undefined || python_code=="" || python_code==null){
         layer.msg('策略代码为空');
         return;
@@ -23,7 +25,7 @@ function submitSaveAction(){
         type: 'POST',
         data: {
             "userId":"123456",
-            "algorithmName": "万宁",
+            "algorithmName": algorithmName,
             "algorithmId":algorithmId,
             "code": python_code
         },
@@ -43,6 +45,7 @@ function submitSaveAction(){
 
     });
 }
+//添加回测
 function submitAdd(){
     layer.msg('确定添加?', {
         time: 0 //不自动关闭
@@ -55,6 +58,7 @@ function submitAdd(){
 }
 function submitAddAction(){
     var python_code = editor.getValue();
+    var algorithmName= $(".algo-title").html();
     var rootPath = "http://localhost:8089/quant";
     if(python_code==undefined || python_code=="" || python_code==null){
         layer.msg('策略代码为空');
@@ -66,7 +70,7 @@ function submitAddAction(){
         type: 'POST',
         data: {
             "userId":"123456",
-            "algorithmName": "test_cui",
+            "algorithmName": algorithmName,
             "code": python_code
         },
         dataType: 'json',
@@ -89,7 +93,7 @@ function submitAddAction(){
         }
     });
 }
-
+//运行回测
 function submitRun(){
     layer.msg('确定运行吗?', {
         time: 0 //不自动关闭
@@ -140,8 +144,7 @@ function submitRunAction(){
     });
 }
 
-
-
+//全屏事件
 function allscreen() {
     if ($("#editpanel").attr("class") == 'col-md-9') {
         $("#leftside").css("display", "none");
@@ -153,7 +156,43 @@ function allscreen() {
         $("#screen-set").removeClass("icon-minus").addClass("icon-fullscreen");
     }
 }
+function getByteLen(e) {
+    for (var t = 0, a = 0; a < e.length; a++)null != e.charAt(a).match(/[^\x00-\xff]/gi) ? t += 2 : t += 1;
+    return t
+}
+
 $(document).ready(function(){
+
+    //修改策略名称
+    $(".algo-title").click(function (e) {
+        e.stopPropagation(),
+        $(this).addClass("hidden"),
+        $(".algo-title-box").removeClass("hidden").focus().val($(".algo-title").html());
+        var t = getByteLen($("#title-box").val());
+        $("#title-box").width(8 * t + "px").css({"min-width": 208, "max-width": 1280})
+    });
+
+    $("#title-box").keydown(function () {
+        var e = getByteLen($("#title-box").val());
+        if(e>31){
+            layer.msg('请缩短字数到15字');
+           return;
+        }
+        $("#title-box").width(8 * e + "px").css({"min-width": 208, "max-width": 1280})
+    });
+
+    $("#title-box").blur(function () {
+        var t = getByteLen($("#title-box").val());
+        if(t>31){
+            layer.msg('请缩短字数到15字');
+            return;
+        }
+        $(".algo-title-box").addClass("hidden");
+        var e = this;
+        "" != $(this).val() && $(".algo-title").html($(e).val()),
+            $(".algo-title").removeClass("hidden");
+    }),
+
     $("#selectAll").click(function () {
         $("#algo_table").find("tbody").find("input[type=checkbox]").prop("checked", this.checked);
         $("#algo_table").find("input[type=checkbox]").trigger("change");

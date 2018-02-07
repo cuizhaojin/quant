@@ -118,13 +118,19 @@
         </div>
         <div class="col-md-9" id="editpanel">
             <div class="panel panel-default">
-                <div class="panel-heading" style="padding: 4px 15px">
-                    <form class="form-inline">
+                <div class="panel-heading" style="padding: 3px 15px;height: 42px;">
                         <div class="row">
-                            <div class="col-xs-6" style="padding-top: 7px">
+                            <div class="col-xs-6">
                                 <a href="#" style="text-decoration: none;color:#383838;">
                                     <i class="icon-fullscreen" onclick="allscreen();" id="screen-set"></i>
-                                </a> 源代码
+                                </a>
+                                <c:if test="${pageflag=='new'}">
+                                    <h5 class="algo-title" title="点击修改策略名称" style="text-transform:none">请编辑策略名称</h5>
+                                </c:if>
+                                <c:if test="${pageflag=='edit'}">
+                                    <h5 class="algo-title" title="点击修改策略名称" style="text-transform:none">${data.result[0].algorithm_name}</h5>
+                                </c:if>
+                                <input class="algo-title-box medium hidden" id="title-box" size="30" type="text">
                             </div>
                             <div class="col-xs-6 text-right" id="editbtn">
                                 <c:if test="${pageflag=='new'}">
@@ -143,7 +149,6 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
                 </div>
                 <div class="panel-body" style="height: 405px;padding:0px">
                     <!--代码输入框（注意请务必设置高度，否则无法显示）-->
