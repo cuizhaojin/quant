@@ -25,17 +25,135 @@
     <script type="text/javascript" src="${contextPath}/plugin/layer/layer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${contextPath}/plugin/page/jquery.paging.js"  type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/js/action.js"  type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/js/mqtt-action.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="${contextPath}/css/style.css">
     <script>
         var flag = '${pageflag}';
+        var rootPath = "${contextPath}";
         if(flag =='new'){
             $(document).attr("title", '新建策略');
         }else{
             $(document).attr("title", '编辑策略');
         }
+        //获取的的策略列表
+        function getMyAlgorithmList(){
+            $.ajax({
+                url: rootPath + '/manager/getAlgorithmList?pageSize=7&pageId=1',
+                async: true,
+                type: 'GET',
+                data: {
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.result == 1) {
+                      var html ="";
+                      var obj = data.algorithmMainList;
+                      for(var i = 0; i < obj.length ; i++){
+                        var htmltemp = "<tr>"+
+                                "<td style='vertical-align:middle'>"+obj[i].algorithm_id+"</td>"+
+                                "<td><img src='/quant/image/code_wizard.png' alt=''/>" +
+                                "<a href='/quant/manager/edit/"+obj[i].algorithm_id+"' style='color: #333;'>"+obj[i].algorithm_name+"</a></td>"+
+                                "</tr>";
+                        html = html + htmltemp;
+                      }
+                      $("#myalgorithm tbody").append(html);
+                    }
+                },
+                error: function () {
+                    layer.msg('获取策略列表初始化失败');
+                }
 
+            });
+        }
+        $(function(){
+         getMyAlgorithmList();
+         pageinit();
+         $("a[value='首页']").css("display","none");
+         $("a[value='尾页']").css("display","none");
+        });
+
+        function oprates(data) {
+            if (data.result == 1) {
+                var html = "";
+                var obj = data.algorithmMainList;
+                for (var i = 0; i < obj.length; i++) {
+                    var htmltemp = "<tr>" +
+                            "<td style='vertical-align:middle'>" + obj[i].algorithm_id + "</td>" +
+                            "<td><img src='/quant/image/code_wizard.png' alt=''/>" +
+                            "<a href='/quant/manager/edit/" + obj[i].algorithm_id + "' style='color: #333;'>" + obj[i].algorithm_name + "</a></td>" +
+                            "</tr>";
+                    html = html + htmltemp;
+                }
+                $("#myalgorithm tbody").html(html);
+            } else {
+                layer.msg('获取失败');
+            }
+        }
+
+
+    </script>
+
+    <script>
+        function pageinit(){
+            //分页
+            var ispage = '${ispage}';
+            var totalnum = '${total}';
+            var totalpage = '${totalpage}';
+            var currentPage = ${currentPage};
+            if(ispage=='true'){
+                ispage = true;
+            }else{
+                ispage = false;
+            }
+            //自定义皮肤，无跳转框，总长度100，总长度等参数实际使用由后台传入ajaxData
+            if(ispage){
+                $(".page").paging({
+                    height: 30,
+                    width: 11,
+                    total: totalpage,
+                    currentPage:currentPage,
+                    showPage:3,
+                    centerBgColor: "#fff",
+                    centerFontColor: "#000",
+                    centerBorder: "1px solid #ddd",
+                    transition: "all .2s",
+                    centerHoverBgColor: "#00a1d6",
+                    centerHoverBorder: "1px solid #00a1d6",
+                    centerFontHoverColor: "#fff",
+                    otherFontHoverColor: "#fff",
+                    otherBorder: "1px solid #ddd",
+                    otherHoverBorder: "1px solid #00a1d6",
+                    otherBgColor: "#fff",
+                    otherHoverBgColor: "#00a1d6",
+                    currentFontColor: "#fff",
+                    currentBgColor: "#00a1d6",
+                    currentBorder: "1px solid #00a1d6",
+                    fontSize: 13,
+                    currentFontSize: 13,
+                    animation:true,
+                    cormer: 2,
+                    gapWidth: 3,
+                    jumpBgColor: "#fff",
+                    jumpFontHoverColor: "#fff",
+                    jumpHoverBgColor: "#25dd3d",
+                    jumpBorder: "1px solid #ddd",
+                    jumpHoverBorder: "1px solid #25dd3d",
+                    beforeBtnString: "<<",
+                    nextBtnString: ">>",
+                    submitStyle: "ajax",                 //点击按钮后的提交方式，有a标签的href提交和ajax异步提交两种选择
+                    submitType: "get",                  //注明是通过get方式访问还是post方式访问
+                    idParameter: "pageId",               //传到后台的当前页的id的参数名，这个传值会自动添加在href或ajax的url末尾
+                    url: "/quant/manager/getAlgorithmList?pageSize=7",               //需要提交的目标控制器，如"/Home/List/"或"/Home/List?name='张三'&password='123456'"
+                    limit: 5000,                         //设置滚动显示方式的极限值，大于则自动切换无滚动模式
+                    animation: true,                     //是否是滚动动画方式呈现  false为精简方式呈现   页数大于limit时无论怎么设置自动默认为false
+                    dataOperate: function oprate(data) {
+                        oprates(data);
+                    }         //用于ajax返回的数据的操作,回调函数,data为服务器返回数据
+                });
+            };
+        }
     </script>
 </head>
 <body>
@@ -43,7 +161,7 @@
 <!--导航-->
 <div id="content-header" style="background-color: #e5e5e5;">
     <div class="container">
-        <div id="breadcrumb"> <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
+        <div id="breadcrumb"> <a href="${contextPath}/manager/list" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
     </div>
 </div>
 <!--二级导航-->
@@ -80,32 +198,19 @@
                 <div class="panel-heading">
                     我的策略列表
                 </div>
-                <div class="panel-body" style="height: 406px; padding: 0px;">
+                <div class="panel-body" style="height: 406px; padding: 0px;" id="myalgorithm">
                     <table class="table table-hover">
                         <tbody>
                         <tr style="border: hidden">
                             <th>策略id</th>
                             <th>策略名称</th>
                         </tr>
-                        <c:forEach var="algorithmMain" items="${algorithmList.result}" end="6">
-                            <tr>
-                                <td style="vertical-align:middle">${algorithmMain.algorithm_id}</td>
-
-                                <td><img src="/quant/image/code_wizard.png" alt=""/> <a href="/quant/manager/edit/${algorithmMain.algorithm_id}" style="color: #333;" >${algorithmMain.algorithm_name}</a></td>
-                            </tr>
-                        </c:forEach>
                         </tbody>
                     </table>
-                    <div style="position: absolute; left: 15%;bottom: 20px;">
-                        <ul class="pagination pagination-sm pull-right">
-                            <li><a href="#">«</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
+                    <div style="position: absolute;left:10%;bottom: 30px;">
+                        <div style="margin: 0 auto;width:260px">
+                            <div class="page"></div>
+                        </div>
                     </div>
                 </div>
 

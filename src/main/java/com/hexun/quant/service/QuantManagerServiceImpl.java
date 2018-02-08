@@ -1,11 +1,17 @@
 package com.hexun.quant.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.hexun.quant.utils.HttpUtils;
+import com.hexun.quant.utils.ModelAndViewUtil;
 import com.hexun.quant.utils.PropertiesUtils;
+import com.hexun.quant.vo.AlgorithmMain;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hexun on 2018/1/30.
@@ -189,5 +195,26 @@ public class QuantManagerServiceImpl {
         }
         logger.info("result=" + result);
         return result;
+    }
+
+    /**
+     * 组装 json 串
+     * @param jsonObject
+     * @return
+     */
+    public List<AlgorithmMain> convertJavaBean(JSONObject jsonObject){
+        List<AlgorithmMain> list = new ArrayList<AlgorithmMain>();
+        if("0".equals(jsonObject.get("code").toString())) {
+            JSONArray jsonArray = jsonObject.getJSONArray("result");
+            //判断返回值中是否有策略代码
+            for(int i =0;i< jsonArray.size();i++){
+                JSONObject child = jsonArray.getJSONObject(i);
+                AlgorithmMain vo = new AlgorithmMain();
+                vo.setAlgorithm_id(child.get("algorithm_id").toString());
+                vo.setAlgorithm_name(child.get("algorithm_name").toString());
+                list.add(vo);
+            }
+        }
+        return list;
     }
 }

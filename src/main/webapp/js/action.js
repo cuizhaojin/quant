@@ -1,3 +1,5 @@
+var contextpath = 'http://10.0.202.63:8099/quant'
+//var contextpath = 'http://localhost:8089/quant';
 //修改回测
 function submitSave(){
     layer.msg('确定修改?', {
@@ -17,10 +19,9 @@ function submitSaveAction(){
         layer.msg('策略代码为空');
         return;
     }
-    var rootPath = "http://localhost:8089/quant"
     var algorithmId = $("#algorithmId").val();
     $.ajax({
-        url: rootPath + '/manager/modifyAlgorithm',
+        url: contextpath + '/manager/modifyAlgorithm',
         async: true,
         type: 'POST',
         data: {
@@ -32,7 +33,6 @@ function submitSaveAction(){
         dataType: 'json',
         success: function (data) {
             if (data.result == 1) {
-                console.info(data);
                 layer.msg('修改策略成功');
             } else if (data.result == 0||data.result == 2) {
                 console.info(data);
@@ -59,13 +59,12 @@ function submitAdd(){
 function submitAddAction(){
     var python_code = editor.getValue();
     var algorithmName= $(".algo-title").html();
-    var rootPath = "http://localhost:8089/quant";
     if(python_code==undefined || python_code=="" || python_code==null){
         layer.msg('策略代码为空');
         return;
     }
     $.ajax({
-        url: rootPath + '/manager/addAlgorithm',
+        url: contextpath + '/manager/addAlgorithm',
         async: true,
         type: 'POST',
         data: {
@@ -76,15 +75,16 @@ function submitAddAction(){
         dataType: 'json',
         success: function (data) {
             if (data.result == 1) {
-                console.info(data);
                 layer.msg('添加策略成功');
                 //修改 添加按钮 -> 修改按钮
                 $("#editbtn a").eq(0).remove();
                 var html = "<a class='btn btn-default'onclick='submitSave()' id='submitSave'> 修改</a>";
                 $("#editbtn").prepend(html);
-                $(window).attr('location',rootPath+"/manager/edit/"+data.algorithm_id);
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时1000毫秒
+                    $(window).attr('location',rootPath+"/manager/edit/"+data.algorithm_id);
+                },1000);
+
             } else if (data.result == 0||data.result == 2) {
-                console.info(data);
                 layer.msg('添加策略失败');
             }
         },
@@ -111,10 +111,9 @@ function submitRunAction(){
         layer.msg('策略代码为空');
         return;
     }
-    var rootPath = "http://localhost:8089/quant";
     var algorithmId = $("#algorithmId").val();
     $.ajax({
-        url: rootPath + '/manager/executeAlgorithm',
+        url: contextpath + '/manager/executeAlgorithm',
         async: true,
         type: 'POST',
         data: {
@@ -125,7 +124,6 @@ function submitRunAction(){
         dataType: 'json',
         success: function (data) {
             if (data.result == 1) {
-                console.info(data);
                 //清空控制台
                 $("#log .less-container").empty();
                 $("#errorlog .less-container").empty();
@@ -160,9 +158,7 @@ function getByteLen(e) {
     for (var t = 0, a = 0; a < e.length; a++)null != e.charAt(a).match(/[^\x00-\xff]/gi) ? t += 2 : t += 1;
     return t
 }
-
 $(document).ready(function(){
-
     //修改策略名称
     $(".algo-title").click(function (e) {
         e.stopPropagation(),
@@ -278,7 +274,6 @@ $(document).ready(function(){
         }
     });
     $("#del-algorithm").click(function () {
-         var rootPath = "http://localhost:8089/quant";
          layer.msg('确定删除策略?', {
          time: 0 //不自动关闭
          ,btn: ['OK', '返回']
@@ -291,9 +286,8 @@ $(document).ready(function(){
              });
              var b = e.join(",");
              if (b && e.length==1){
-                 console.info(b);
                  $.ajax({
-                     url: rootPath + '/manager/deleteAlgorithm',
+                     url: contextpath + '/manager/deleteAlgorithm',
                      async: true,
                      type: 'POST',
                      data: {
@@ -303,7 +297,6 @@ $(document).ready(function(){
                      dataType: 'json',
                      success: function (data) {
                          if (data.result == 1) {
-                             console.info(data);
                              layer.msg('删除策略成功');
                              setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
                                  window.location.reload();//页面刷新
