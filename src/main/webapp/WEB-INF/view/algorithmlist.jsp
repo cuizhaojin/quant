@@ -74,8 +74,8 @@
                 <td class="align-left">名称</td>
                 <td>分类</td>
                 <td>最后修改时间</td>
-                <td>历史编译运行（假数据）</td>
-                <td>历史回测（假数据）</td>
+                <td>历史编译运行</td>
+                <td>历史回测</td>
                 <td></td>
             </tr>
             </thead>
