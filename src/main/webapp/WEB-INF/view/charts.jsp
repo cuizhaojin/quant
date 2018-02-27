@@ -20,8 +20,10 @@
     <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
     <link href="${contextPath}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="${contextPath}/plugin/layer/layer.js"></script>
     <script src="${contextPath}/js/highstock.js"  type="text/javascript" charset="utf-8"></script>
+    <script src="${contextPath}/js/mqtt-chart-action.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="${contextPath}/css/style.css">
 </head>
 <body>
@@ -123,119 +125,83 @@
 <script>
     $(function () {
         Highcharts.setOptions({
-            lang: {
-                rangeSelectorZoom: ''
+            global: {
+                useUTC: false
             }
         });
-        $.getJSON('https://data.jianshukeji.com/stock/history/000001', function (data) {
-            if(data.code !== 1) {
-                alert('读取股票数据失败！');
-                return false;
-            }
-            data = data.data;
-            var ohlc = [],
-                    volume = [],
-                    dataLength = data.length,
-            // set the allowed units for data grouping
-                    groupingUnits = [[
-                        'week',                         // unit name
-                        [1]                             // allowed multiples
-                    ], [
-                        'month',
-                        [1, 2, 3, 4, 6]
-                    ]],
-                    i = 0;
-            for (i; i < dataLength; i += 1) {
-                ohlc.push([
-                    data[i][0], // the date
-                    data[i][1], // open
-                    data[i][2], // high
-                    data[i][3], // low
-                    data[i][4] // close
-                ]);
-                volume.push([
-                    data[i][0], // the date
-                    data[i][5] // the volume
-                ]);
-            }
-            // create the chart
-            $('#main').highcharts('StockChart', {
-                rangeSelector: {
-                    selected: 1,
-                    inputDateFormat: '%Y-%m-%d'
-                },
+        function activeLastPointToolip(chart) {
+            var points = chart.series[0].points;
+            chart.tooltip.refresh(points[points.length -1]);
+        }
+        $('#main').highcharts({
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0],
+                                chart = this;
+                        setInterval(function () {
+                            var x = (new Date()).getTime(), // current time
+                                    y = Math.random();
+                            series.addPoint([x, y], true, true);
+                            activeLastPointToolip(chart)
+                        }, 1000);
+                    }
+                }
+            },
+            title: {
+                text: '动态模拟实时数据'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
                 title: {
-                    text: '平安银行历史股价'
+                    text: '值'
                 },
-                xAxis: {
-                    dateTimeLabelFormats: {
-                        millisecond: '%H:%M:%S.%L',
-                        second: '%H:%M:%S',
-                        minute: '%H:%M',
-                        hour: '%H:%M',
-                        day: '%m-%d',
-                        week: '%m-%d',
-                        month: '%y-%m',
-                        year: '%Y'
-                    }
-                },
-                tooltip: {
-                    split: false,
-                    shared: true
-                },
-                yAxis: [{
-                    labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: '股价'
-                    },
-                    height: '65%',
-                    resize: {
-                        enabled: true
-                    },
-                    lineWidth: 2
-                }, {
-                    labels: {
-                        align: 'right',
-                        x: -3
-                    },
-                    title: {
-                        text: '成交量'
-                    },
-                    top: '65%',
-                    height: '35%',
-                    offset: 0,
-                    lineWidth: 2
-                }],
-                series: [{
-                    type: 'candlestick',
-                    name: '平安银行',
-                    color: 'green',
-                    lineColor: 'green',
-                    upColor: 'red',
-                    upLineColor: 'red',
-                    tooltip: {
-                    },
-                    navigatorOptions: {
-                        color: Highcharts.getOptions().colors[0]
-                    },
-                    data: ohlc,
-                    dataGrouping: {
-                        units: groupingUnits
-                    },
-                    id: 'sz'
-                },{
-                    type: 'column',
-                    data: volume,
-                    yAxis: 1,
-                    dataGrouping: {
-                        units: groupingUnits
-                    }
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
                 }]
-            });
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: '随机数据',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                            time = (new Date()).getTime(),
+                            i;
+                    for (i = -19; i <= 0; i += 1) {
+                        data.push({
+                            x: time + i * 1000,
+                            y: Math.random()
+                        });
+                    }
+                    return data;
+                }())
+            }]
+        }, function(c) {
+            activeLastPointToolip(c)
         });
+
     });
 
 </script>

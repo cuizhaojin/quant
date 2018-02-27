@@ -1,5 +1,5 @@
-var contextpath = 'http://10.0.202.63:8099/quant'
-//var contextpath = 'http://localhost:8089/quant';
+//var contextpath = 'http://10.0.202.63:8099/quant'
+var contextpath = 'http://localhost:8089/quant';
 //修改回测
 function submitSave(){
     layer.msg('确定修改?', {
@@ -131,6 +131,11 @@ function submitRunAction(){
                 $("#tradelist tbody").empty();
                 $("#holdlist tbody").empty();
                 layer.msg('执行策略成功');
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                    window.location.href = contextpath + "/manager/benefit"
+                },1000);
+
+
             } else if (data.result == 0||data.result == 2) {
                 console.info(data);
                 layer.msg('执行策略失败');
