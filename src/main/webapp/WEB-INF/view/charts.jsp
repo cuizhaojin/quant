@@ -124,13 +124,13 @@
 <script type="text/javascript" src="${contextPath}/js/bootstrap.min.js" ></script>
 <script>
     $(function () {
-        Highcharts.setOptions({
+        Highcharts.setOptions({//highchart 全局属性
             global: {
                 useUTC: false
             }
         });
-        var chart = Highcharts.chart('main', {
-            chart: {
+        var chart = Highcharts.StockChart('main', {
+            chart: {//图表全局属性
                 type: 'spline',
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
@@ -142,10 +142,16 @@
                     }
                 }
             },
+            credits: { //版本信息
+                enabled: true,
+                href:'http://www.hexun.com',
+                text:'www.hexun.com'
+
+            },
             title: {
                 text: '动态模拟实时数据'
             },
-            xAxis: {
+            xAxis: {// x 轴
                 type: "datetime",
                 dateTimeLabelFormats : { // don't display the
                     // dummy year
@@ -155,7 +161,7 @@
                     year : '%Y-%m-%d'
                 }
             },
-            yAxis: {
+            yAxis: {   //y轴
                 title: {
                     text: '值'
                 },
@@ -165,16 +171,28 @@
                     color: '#808080'
                 }]
             },
-            legend: {
+            legend: {//图例
                 enabled: false
             },
-            exporting: {
+            exporting: {   //导出模块
                 enabled: false
             },
-            series: [{
-                name: '随机数据',
-                "data": [ ]
-            }]
+            rangeSelector: {  //范围选择按钮组
+                enabled: false
+            },
+            tooltip: {  //提示框
+                split: false
+            },
+            series: [  //数据列
+                {
+                    name: '基准收益',
+                    "data": [ ]
+                },
+                {
+                    name: '回测收益',
+                    "data": [ ]
+                }
+                ]
         });
         function activeLastPointToolip(chart) {
             var points = chart.series[0].points;
@@ -182,37 +200,43 @@
         }
 
         var arramqtt = [];
+        var arramqtt2 =[];
         var attachflag = false;
 
         //called when a message arrives
         function onMessageArrived(message) {
             console.log("onMessageArrived:"+message.payloadString);
-
             var obj = eval('('+message.payloadString+')');
             var flag = obj[0].type;
             if(flag=='1') {
                 var x = new Date(obj[0].content.date).getTime();
                 var y = obj[0].content.benchmark_returns;
+                var y2 = obj[0].content.stock_returns;
                 console.info('x= '+x+' y= '+y);
                 arramqtt.unshift([x,y]);
-                console.log([x,y] + "  插入");
-                console.log(arramqtt);
+                arramqtt2.unshift([x,y2])
+                console.log("基准收益数组 "[x,y] + "  插入");
+                console.log("回测收益数组 "[x,y2] + "  插入");
                 var len = arramqtt.length;
                 if(len>=10 && !attachflag){
                     attachflag = true;
-                    popPoint(arramqtt)
+                    popPoint(arramqtt,arramqtt2)
                 }
             }
         }
-        function popPoint(arrayobj) {
+        function popPoint(arrayobj1,arrayobj2) {
             setInterval(function () {
-                if(arrayobj.length>0){
-                    console.log(arrayobj.pop());
-                    chart.series[0].addPoint(arrayobj.pop(), true, false);
-                    activeLastPointToolip(chart);
+                if(arrayobj1.length>0){
+                    var temp = arrayobj1.pop();
+                    var temp2 = arrayobj2.pop();
+                    console.info(temp);
+                    console.info(temp2);
+                    chart.series[0].addPoint(temp, true, false);
+                    chart.series[1].addPoint(temp2, true, false);
+                    //activeLastPointToolip(chart);
                 }
 
-            },100);
+            },300);
         }
     });
 
