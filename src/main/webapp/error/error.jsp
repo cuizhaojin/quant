@@ -26,7 +26,7 @@
 <!--导航-->
 <div id="content-header" style="background-color: #e5e5e5;">
     <div class="container">
-        <div id="breadcrumb"> <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
+        <div id="breadcrumb"> <a href="${contextPath}/manager/list" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i> Home</a></div>
     </div>
 </div>
 <div class="cont">
