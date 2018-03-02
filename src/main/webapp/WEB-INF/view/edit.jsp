@@ -26,6 +26,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/plugin/page/jquery.paging.js"  type="text/javascript" charset="utf-8"></script>
+    <script src="${contextPath}/js/highstock.js"  type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/js/action.js"  type="text/javascript" charset="utf-8"></script>
     <script src="${contextPath}/js/mqtt-action.js"  type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" href="${contextPath}/css/style.css">
@@ -170,8 +171,8 @@
         <div class="container">
             <ul class="mainnav">
                 <li class="active"><a href="${contextPath}/manager/new"><i class="glyphicon glyphicon-edit"></i><span>主编辑区</span> </a> </li>
-                <li><a href="${contextPath}/manager/benefit"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
-                <li class="subnavbar-open-right"><a href="${contextPath}/manager/testdetail"><i class="glyphicon glyphicon-dashboard"></i><span>回测历史</span> </a></li>
+                <li><a href="javascript:void(0)"><i class="icon-bar-chart"></i><span>收益概述</span> </a> </li>
+                <li class="subnavbar-open-right"><a href="javascript:void(0)"><i class="glyphicon glyphicon-dashboard"></i><span>回测历史</span> </a></li>
                 <li><a href="${contextPath}/manager/list"><i class="glyphicon glyphicon-list-alt"></i><span>我的策略</span> </a> </li>
                 <li><a href="index.html"><i class="icon-plus "></i><span>new nav</span> </a> </li>
                 <li class="dropdown subnavbar-open-right"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-plus"></i><span>下拉列表</span> <b class="caret"></b></a>
@@ -244,7 +245,7 @@
                                     </a>
                                 </c:if>
 
-                                <a class="btn btn-default" onclick="submitRun()" id="submitRun">
+                                <a class="btn btn-default" id="submitRun">
                                     <span class="icon-play"></span> RUN
                                 </a>
                             </div>
@@ -278,6 +279,8 @@
                         <li class=""><a href="#tradelist" data-toggle="tab" aria-expanded="false">交易</a>
                         </li>
                         <li class=""><a href="#holdlist" data-toggle="tab" aria-expanded="false">持仓</a>
+                        </li>
+                        <li class=""><a href="#chartsarea" data-toggle="tab" aria-expanded="false">图表</a>
                         </li>
                     </ul>
 
@@ -403,6 +406,54 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="chartsarea">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="panel panel-default" style="height: 500px;margin-bottom: 1px;border: none" id="main2">
+                                        <div class="sm-st clearfix">
+                                            <div class="sm-st-info">
+                                                <span>4.00%</span>
+                                                策略收益
+                                            </div>
+                                        </div>
+                                        <div class="sm-st clearfix">
+                                            <div class="sm-st-info">
+                                                <span>-0.186%</span>
+                                                策略年化收益
+                                            </div>
+                                        </div>
+                                        <div class="sm-st clearfix">
+                                            <div class="sm-st-info">
+                                                <span>100,320</span>
+                                                基准收益
+                                            </div>
+                                        </div>
+                                        <div class="sm-st clearfix">
+                                            <div class="sm-st-info">
+                                                <span>4567</span>
+                                                Alpha
+                                            </div>
+                                        </div>
+                                        <div class="sm-st clearfix">
+                                            <div class="sm-st-info">
+                                                <span>4567</span>
+                                                Beta
+                                            </div>
+                                        </div>
+                                        <div class="sm-st clearfix">
+                                            <div class="sm-st-info">
+                                                <span>4567</span>
+                                                最大回撤
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="panel panel-default" style="height: 500px;margin-bottom: 1px;" id="main">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -453,5 +504,6 @@
     //editor.getValue(); // or session.getValue
 
 </script>
+
 </body>
 </html>

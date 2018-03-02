@@ -93,59 +93,8 @@ function submitAddAction(){
         }
     });
 }
-//运行回测
-function submitRun(){
-    layer.msg('确定运行吗?', {
-        time: 0 //不自动关闭
-        ,btn: ['嗯呐', '返回']
-        ,yes: function(index){
-            submitRunAction();
-            layer.close(index);
-        }
-    });
-}
-function submitRunAction(){
-
-    var python_code = editor.getValue();
-    if(python_code==undefined || python_code=="" || python_code==null){
-        layer.msg('策略代码为空');
-        return;
-    }
-    var algorithmId = $("#algorithmId").val();
-    $.ajax({
-        url: contextpath + '/manager/executeAlgorithm',
-        async: true,
-        type: 'POST',
-        data: {
-            "userId":"123456",
-            "algorithmId": algorithmId,
-            "code": python_code
-        },
-        dataType: 'json',
-        success: function (data) {
-            if (data.result == 1) {
-                //清空控制台
-                $("#log .less-container").empty();
-                $("#errorlog .less-container").empty();
-                $("#backtest tbody").empty();
-                $("#tradelist tbody").empty();
-                $("#holdlist tbody").empty();
-                layer.msg('执行策略成功');
-                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
-                    window.location.href = contextpath + "/manager/benefit"
-                },1000);
 
 
-            } else if (data.result == 0||data.result == 2) {
-                console.info(data);
-                layer.msg('执行策略失败');
-            }
-        },
-        error: function () {
-            layer.msg('执行策略失败');
-        }
-    });
-}
 
 //全屏事件
 function allscreen() {
@@ -163,7 +112,63 @@ function getByteLen(e) {
     for (var t = 0, a = 0; a < e.length; a++)null != e.charAt(a).match(/[^\x00-\xff]/gi) ? t += 2 : t += 1;
     return t
 }
-$(document).ready(function(){
+$(function () {
+    //运行回测
+    $("#submitRun").click(function () {
+        layer.msg('确定运行吗?', {
+            time: 0 //不自动关闭
+            ,btn: ['嗯呐', '返回']
+            ,yes: function(index){
+                submitRunAction();
+                layer.close(index);
+            }
+        });
+    });
+    function submitRunAction(){
+
+        var python_code = editor.getValue();
+        if(python_code==undefined || python_code=="" || python_code==null){
+            layer.msg('策略代码为空');
+            return;
+        }
+        var algorithmId = $("#algorithmId").val();
+        $.ajax({
+            url: contextpath + '/manager/executeAlgorithm',
+            async: true,
+            type: 'POST',
+            data: {
+                "userId":"123456",
+                "algorithmId": algorithmId,
+                "code": python_code
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.result == 1) {
+                    // connect the client
+                    //清空控制台
+                    $("#log .less-container").empty();
+                    $("#errorlog .less-container").empty();
+                    $("#backtest tbody").empty();
+                    $("#tradelist tbody").empty();
+                    $("#holdlist tbody").empty();
+                    $("#main").empty();
+                    getCharts();
+                    layer.msg('执行策略成功');
+                    /*  setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                     window.location.href = contextpath + "/manager/benefit"
+                     },1000);*/
+
+
+                } else if (data.result == 0||data.result == 2) {
+                    console.info(data);
+                    layer.msg('执行策略失败');
+                }
+            },
+            error: function () {
+                layer.msg('执行策略失败');
+            }
+        });
+    }
     //修改策略名称
     $(".algo-title").click(function (e) {
         e.stopPropagation(),

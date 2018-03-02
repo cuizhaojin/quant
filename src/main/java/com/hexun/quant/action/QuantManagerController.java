@@ -333,7 +333,7 @@ public class QuantManagerController {
                 String execute_result = quantManagerServiceImpl.apiForExecuteTask(userId,taskId,algorithmId,jsonparam);
                 JSONObject jsonObject = JSON.parseObject(execute_result);
                 if("0".equals(jsonObject.get("code").toString())){
-                    return ModelAndViewUtil.Json_ok("执行策略成功");
+                    return ModelAndViewUtil.Json_ok("taskid",taskId);
                 }else{
                     return ModelAndViewUtil.Json_error(jsonObject);
                 }

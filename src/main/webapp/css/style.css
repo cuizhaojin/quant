@@ -174,7 +174,7 @@ body{
 }
 .sm-st-info span {
     display: block;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
 }
 #code{
@@ -323,7 +323,7 @@ input[type=text].rename_input {
     vertical-align: text-bottom;
 }
 .less-container{
-    height: 210px;
+    height: 477px;
     color: rgb(153, 153, 153);
     background-color: #272822;
     padding: 2px 4px 20px 4px;
@@ -417,7 +417,7 @@ div.less-status-bar span input.checkbox {
     height: 230px;
 }
 .table-responsive{
-    height: 230px;
+    height: 500px;
 }
 .algo-title{
     display: inline-block;
