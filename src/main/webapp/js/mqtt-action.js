@@ -75,20 +75,8 @@ function getCharts() {
     });
 }
 client = null;
-client = new Paho.MQTT.Client("10.0.200.59", Number(9001), "121212212");
+connected = false;
 
-//client options
-var options = {
-    timeout: 3,
-    keepAliveInterval: 60,
-    cleanSession: true,
-    useSSL: false,
-    onSuccess: onConnect,
-    onFailure: OnConnectFailed,
-    userName: "S_user",
-    password: "aaa",
-    mqttVersion: 4
-};
 
 // subscribe_options
 var subscribe_options = {
@@ -99,44 +87,60 @@ var subscribe_options = {
 }
 
 // connect the client
-client.connect(options);
+function connect(){
+    client = new Paho.MQTT.Client("10.0.200.59", Number(9001), "121212212");
 
-// set callback handlers
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
+    //client options
+    var options = {
+        timeout: 3,
+        keepAliveInterval: 60,
+        cleanSession: true,
+        useSSL: false,
+        onSuccess: onConnect,
+        onFailure: OnConnectFailed,
+        userName: "S_user",
+        password: "aaa",
+        mqttVersion: 4
+    };
+    client.connect(options);
+    // set callback handlers
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+}
 
+//disconnect function
+function disconnect(){
+    console.info('Disconnecting from Server');
+    client.disconnect();
+    connected = false;
+}
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
     if (responseObject.errorCode !== 0) {
         console.log("onConnectionLost:onSubFailed:MQTT——链接丢失:" + responseObject.errorMessage);
     }
-    client.connect(options);
-    console.log("断后重连");
+    connected = false;
 }
 
 // called when a message arrives
 function onMessageArrived(message) {
     tailDingYue(message.payloadString);
-    console.log("onMessageArrived:" + message.payloadString);
+   // console.log("onMessageArrived:" + message.payloadString);
 }
 
 // called when the client connects
 function onConnect() {
     // Once a connection has been made, make a subscription and send a message.
     console.log("onConnect"+"hxquant/123456/"+taskid);
-//  client.subscribe("World");
-//  message = new Paho.MQTT.Message("Hello");
-//  message.destinationName = "World";
-//  client.send(message);
     client.subscribe("hxquant/123456/"+taskid, subscribe_options);
+    connected = true;
 }
 
 // called when the client failed connect
 function OnConnectFailed(responseObject) {
     if (responseObject.errorCode !== 0) {
         console.log("onConnectFailed:" + responseObject.errorMessage);
-        client.connect(options);
-        console.log("断后重连");
+        connected = false;
     }
 }
 
@@ -144,10 +148,6 @@ function OnConnectFailed(responseObject) {
 function OnSubSuccess(responseObject) {
     console.log("onSubSccess");
     console.log(responseObject);
-//    message = new Paho.MQTT.Message('{"type":"t_s","body":"Hello"}');//创建消息包
-//    message.destinationName = "/hxquant/123456/#";
-//    message.qos = 1;
-//    client.send(message);
 }
 
 
@@ -168,7 +168,7 @@ function tailDingYue(message) {
         //log
         case 0:
             var errortype = obj[0].content.log_level;
-            console.info(obj[0].content.log_info);
+           // console.info(obj[0].content.log_info);
             switch (errortype) {
                 //info
                 case 1:
@@ -258,7 +258,7 @@ var attachflag = false;
 
 //called when a message arrives
 function onMessageArrived2(message) {
-    console.log("onMessageArrived:"+message);
+   // console.log("onMessageArrived:"+message);
     var obj = eval('('+message+')');
     var flag = obj[0].type;
     if(flag=='1') {
@@ -277,3 +277,4 @@ function onMessageArrived2(message) {
         }
     }
 }
+

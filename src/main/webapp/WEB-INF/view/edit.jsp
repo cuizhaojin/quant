@@ -412,37 +412,37 @@
                                     <div class="panel panel-default" style="height: 500px;margin-bottom: 1px;border: none" id="main2">
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>4.00%</span>
+                                                <span>-- --</span>
                                                 策略收益
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>-0.186%</span>
+                                                <span>-- --</span>
                                                 策略年化收益
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>100,320</span>
+                                                <span>--  --</span>
                                                 基准收益
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>4567</span>
+                                                <span>-- --</span>
                                                 Alpha
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>4567</span>
+                                                <span>-- --</span>
                                                 Beta
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>4567</span>
+                                                <span>-- --</span>
                                                 最大回撤
                                             </div>
                                         </div>

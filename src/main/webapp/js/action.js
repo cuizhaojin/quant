@@ -1,5 +1,5 @@
-//var contextpath = 'http://10.0.202.63:8099/quant'
-var contextpath = 'http://localhost:8089/quant';
+var contextpath = 'http://10.0.202.63:8099/quant'
+//var contextpath = 'http://localhost:8089/quant';
 //修改回测
 function submitSave(){
     layer.msg('确定修改?', {
@@ -112,6 +112,7 @@ function getByteLen(e) {
     for (var t = 0, a = 0; a < e.length; a++)null != e.charAt(a).match(/[^\x00-\xff]/gi) ? t += 2 : t += 1;
     return t
 }
+
 $(function () {
     //运行回测
     $("#submitRun").click(function () {
@@ -145,6 +146,14 @@ $(function () {
             success: function (data) {
                 if (data.result == 1) {
                     // connect the client
+                    var new_taskid = data.taskid;
+                    taskid = new_taskid;
+                    if(connected){
+                        disconnect();
+                        connect();
+                    }else{
+                        connect();
+                    }
                     //清空控制台
                     $("#log .less-container").empty();
                     $("#errorlog .less-container").empty();
