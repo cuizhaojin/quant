@@ -161,6 +161,12 @@ $(function () {
                     $("#tradelist tbody").empty();
                     $("#holdlist tbody").empty();
                     $("#main").empty();
+                    $("#stock_returns").text('-- --');
+                    $("#sharpe_ratio").text('-- --');
+                    $("#benchmark_returns").text('-- --');
+                    $("#alpha").text('-- --');
+                    $("#beta").text('-- --');
+                    $("#max_drawdown").text('-- --');
                     getCharts();
                     layer.msg('执行策略成功');
                     /*  setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒

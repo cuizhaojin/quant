@@ -168,7 +168,6 @@ function tailDingYue(message) {
         //log
         case 0:
             var errortype = obj[0].content.log_level;
-           // console.info(obj[0].content.log_info);
             switch (errortype) {
                 //info
                 case 1:
@@ -204,6 +203,12 @@ function tailDingYue(message) {
                 "<td>" + parseFloat(obj[0].content.total_profit) + "</td>" +
                 "<td>" + parseFloat(obj[0].content.capital_left) + "</td></tr>";
             $("#backtest tbody").append(html);
+            $("#stock_returns").text(obj[0].content.stock_returns);
+            $("#sharpe_ratio").text(obj[0].content.sharpe_ratio);
+            $("#benchmark_returns").text(obj[0].content.benchmark_returns);
+            $("#alpha").text(obj[0].content.alpha);
+            $("#beta").text(obj[0].content.beta);
+            $("#max_drawdown").text(obj[0].content.max_drawdown[0]);
             onMessageArrived2(message);
             break;
         //tradelist
@@ -265,11 +270,11 @@ function onMessageArrived2(message) {
         var x = new Date(obj[0].content.date).getTime();
         var y = obj[0].content.benchmark_returns;
         var y2 = obj[0].content.stock_returns;
-        console.info('x= '+x+' y= '+y);
+       // console.info('x= '+x+' y= '+y);
         arramqtt.unshift([x,y]);
         arramqtt2.unshift([x,y2])
-        console.log("基准收益数组 "[x,y] + "  插入");
-        console.log("回测收益数组 "[x,y2] + "  插入");
+        console.log("基准收益数组 "+[x,y] + "  插入");
+        console.log("回测收益数组 "+[x,y2] + "  插入");
         var len = arramqtt.length;
         if(len>=10 && !attachflag){
             attachflag = true;

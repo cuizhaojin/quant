@@ -412,37 +412,37 @@
                                     <div class="panel panel-default" style="height: 500px;margin-bottom: 1px;border: none" id="main2">
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>-- --</span>
+                                                <span id="stock_returns">-- --</span>
                                                 策略收益
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>-- --</span>
-                                                策略年化收益
+                                                <span id="sharpe_ratio">-- --</span>
+                                                夏普比率
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>--  --</span>
+                                                <span id="benchmark_returns">--  --</span>
                                                 基准收益
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>-- --</span>
+                                                <span id="alpha">-- --</span>
                                                 Alpha
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>-- --</span>
+                                                <span id="beta">-- --</span>
                                                 Beta
                                             </div>
                                         </div>
                                         <div class="sm-st clearfix">
                                             <div class="sm-st-info">
-                                                <span>-- --</span>
+                                                <span id="max_drawdown">-- --</span>
                                                 最大回撤
                                             </div>
                                         </div>
